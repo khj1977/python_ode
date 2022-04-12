@@ -21,6 +21,9 @@ class ODEOneDimEulerMethod:
       ddx = f(t, x, xDot)
       xDot = xDot + ddx * self.deltaT
       x = x + xDot * self.deltaT
+
+      yield([t, ddx, xDot, x])
+
       resultT.append(t)
       resultXDot.append(xDot)
       resultX.append(x)
