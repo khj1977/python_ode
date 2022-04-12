@@ -25,7 +25,7 @@ class Observer:
         self.orgControlObserver
         )
 
-      # feedforward observer and data.
-      # errorData = nominalData - observerData (and feedforward) 
+      # feedforward observer and data for K-DO.
+      # errorData = nominalData - observerData (and feedforward for K-DO) 
       # control input = K(t) * error
       # yield estimated uncertainty.
