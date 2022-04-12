@@ -6,6 +6,21 @@ class ODEOneDimEulerMethod:
     self.startX = startX
     self.startXDot = startXDot
 
+  def getDeltaT(self):
+    return self.deltaT
+
+  def getStartT(self):
+    return self.startT
+
+  def getEndT(self):
+    return self.endT
+
+  def getStartX(self):
+    return self.startT
+
+  def startXDot(self):
+    return self.startXDot
+
   # f is function object
   def solve(self, f):
     x = self.startX
