@@ -33,7 +33,12 @@ class ODEOneDimEulerMethod:
     while True:
       if t > self.endT:
         break
+
+      # ODE
+      # Hack the following to use multiple number of f()s to handle observer.
       ddx = f(t, x, xDot)
+      # end of ODE
+
       xDot = xDot + ddx * self.deltaT
       x = x + xDot * self.deltaT
 
@@ -45,7 +50,7 @@ class ODEOneDimEulerMethod:
       resultXDot.append(xDot)
       resultX.append(x)
       # end of debug
-      
+
       t = t + self.deltaT
       # print(x)
 
