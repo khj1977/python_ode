@@ -37,12 +37,17 @@ class ODEOneDimEulerMethod:
       xDot = xDot + ddx * self.deltaT
       x = x + xDot * self.deltaT
 
-      yield([t, ddx, xDot, x])
+      yield [t, ddx, xDot, x]
 
+      # debug
+      # omit the following?
       resultT.append(t)
       resultXDot.append(xDot)
       resultX.append(x)
+      # end of debug
+      
       t = t + self.deltaT
       # print(x)
 
-    return resultT, resultX, resultXDot
+    return self
+    # return resultT, resultX, resultXDot

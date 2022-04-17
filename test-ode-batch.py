@@ -10,12 +10,19 @@ class TestODEBatch(batch.Batch):
   def __init__(self):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.05, 0.05)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.05, 0.05)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
+    self.resultT = []
+    self.resultXDot = []
+    self.resultX = []
 
 
   def solve(self, f):
-    self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
+    # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
+    for result in self.odeEngine.solve(f):
+      self.resultT.append(result[0])
+      self.resultX.append(result[1])
+      self.resultXDot.append(result[2])
 
   def saveToFile(self):
     i = 0
@@ -23,9 +30,6 @@ class TestODEBatch(batch.Batch):
       x = self.resultX[i]
       xDot = self.resultXDot[i]
       output = "{0},{1},{2}".format(t, xDot, x)
-      # debug
-      # print(output)
-      # end of debug
 
       i = i + 1
 
