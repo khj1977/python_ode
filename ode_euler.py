@@ -28,7 +28,9 @@ class ODEOneDimEulerMethod:
     resultT = []
     resultX = []
     resultXDot = []
+    # debug
     # for t in range(self.startT, self.endT, self.deltaT):
+    # end of debug
     t = self.startT
     while True:
       if t > self.endT:
