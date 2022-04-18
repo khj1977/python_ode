@@ -8,6 +8,15 @@ class ODETime:
         self.endT = endT
         self.deltaT = deltaT
 
+    def startClock(self):
+        while True:
+            if self.t > self.endT:
+                break
+            yield self.t
+            self.t = self.t + self.deltaT
+            
+        return self
+
     def setT(self, t):
         self.t = t
         return self

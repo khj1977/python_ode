@@ -24,6 +24,7 @@ class TestODEBatch(batch.Batch):
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
+    # for t in self.envT.startClock()
     for result in self.odeEngine.solve(f, env, envT):
       self.resultT.append(result[0])
       self.resultX.append(result[1])
