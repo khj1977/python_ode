@@ -13,7 +13,7 @@ class TestODEBatch(batch.Batch):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.05, 0.05, f, env, envT)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.5, 0.5, f, env, envT)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []

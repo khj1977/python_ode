@@ -2,11 +2,17 @@ import ode_env
 
 class ODEOneDimEulerMethod:
   def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
+    self.env = env
+    self.envT = envT
+    
     self.deltaT = deltaT
     self.startT = startT
     self.endT = endT
     self.startX = startX
     self.startXDot = startXDot
+
+    self.env.setX(startX)
+    self.env.setXDot(startXDot)
 
     self.diffEQ = f
     self.env = env
@@ -35,8 +41,10 @@ class ODEOneDimEulerMethod:
     # debug
     # return [t, ddx, xDot, x]
     # end of debug
-    x = self.startX
-    xDot = self.startXDot
+    # x = self.startX
+    # xDot = self.startXDot
+    x = self.env.getX()
+    xDot = self.env.getXDot()
 
     # debug
     # for t in range(self.startT, self.endT, self.deltaT):
@@ -62,7 +70,7 @@ class ODEOneDimEulerMethod:
     self.env.setX(x)
     self.env.setXDot(xDot)
     self.env.setXDDot(ddx)
-    self.env.setT(t)
+    # self.env.setT(t)
 
     # debug
     # omit the following?
