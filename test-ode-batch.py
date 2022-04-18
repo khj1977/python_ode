@@ -9,22 +9,24 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self):
+  def __init__(self, f, env, envT):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.05, 0.05)
+    # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.05, 0.05, f, env, envT)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []
     self.resultX = []
+    self.envT = envT
 
 
-  def solve(self, f, env, envT):
+  def solve(self):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
-    for t in self.envT.startClock()
+    for t in self.envT.startClock():
     # for result in self.odeEngine.solve(f, env, envT):
       # self.odeEngine.solve(f, env, envT)
       result = self.odeEngine.inc()
@@ -64,6 +66,6 @@ f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - 
 env = ode_env.ODEEnv()
 envT = ode_time.ODETime(0, 10.0, 0.01)
 
-ode = TestODEBatch()
-ode.solve(f, env, envT)
+ode = TestODEBatch(f, env, envT)
+ode.solve()
 ode.saveToFile()
