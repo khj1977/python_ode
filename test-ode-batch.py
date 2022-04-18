@@ -24,8 +24,10 @@ class TestODEBatch(batch.Batch):
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
-    # for t in self.envT.startClock()
-    for result in self.odeEngine.solve(f, env, envT):
+    for t in self.envT.startClock()
+    # for result in self.odeEngine.solve(f, env, envT):
+      # self.odeEngine.solve(f, env, envT)
+      result = self.odeEngine.inc()
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
@@ -60,7 +62,7 @@ f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - 
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
-envT = ode_time.ODETime(0, 10.0, 0.001)
+envT = ode_time.ODETime(0, 10.0, 0.01)
 
 ode = TestODEBatch()
 ode.solve(f, env, envT)
