@@ -13,7 +13,7 @@ class TestODEBatch(batch.Batch):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 0.5, 0.5, f, env, envT)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 5.0, 5.0, f, env, envT)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []
@@ -56,10 +56,10 @@ class TestODEBatch(batch.Batch):
     
 
 # ddx = f(t, x, xDot)
-# f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
+f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
 # f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot - 2.0 * xDot**3
 # f = lambda t, x, xDot: - 6.0 * x - 5.0 * xDot - 10.0 * t * x
-f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
+# f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
