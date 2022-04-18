@@ -23,6 +23,12 @@ class ODEOneDimEulerMethod:
   def startXDot(self):
     return self.startXDot
 
+  def inc(self):
+    # debug
+    # return [t, ddx, xDot, x]
+    # end of debug
+    return
+
   # f is function object
   def solve(self, f, env, envT):
     x = self.startX
