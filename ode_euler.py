@@ -24,7 +24,7 @@ class ODEOneDimEulerMethod:
     return self.startXDot
 
   # f is function object
-  def solve(self, f, env):
+  def solve(self, f, env, envT):
     x = self.startX
     xDot = self.startXDot
     resultT = []
@@ -33,9 +33,12 @@ class ODEOneDimEulerMethod:
     # debug
     # for t in range(self.startT, self.endT, self.deltaT):
     # end of debug
-    t = self.startT
+    # t = self.startT
+    t = envT.getStartT()
+    deltaT = envT.getDeltaT()
     while True:
-      if t > self.endT:
+      # if t > self.endT:
+      if not envT.isEnd():
         break
 
       # ODE
@@ -44,7 +47,8 @@ class ODEOneDimEulerMethod:
       ddx = f(t, x, xDot)
       # end of ODE
 
-      xDot = xDot + ddx * self.deltaT
+      # xDot = xDot + ddx * self.deltaT
+      xDot = xDot + ddx * deltaT
       x = x + xDot * self.deltaT
 
       env.setX(x)
@@ -61,7 +65,9 @@ class ODEOneDimEulerMethod:
       resultX.append(x)
       # end of debug
 
-      t = t + self.deltaT
+      # t = t + self.deltaT
+      envT.inc()
+      t = envT.getT()
       # print(x)
 
     return self

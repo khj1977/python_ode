@@ -1,6 +1,7 @@
 import ode_euler
 import batch
 import ode_env
+import ode_time
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,12 +19,16 @@ class TestODEBatch(batch.Batch):
     self.resultX = []
 
 
-  def solve(self, f, env):
+  def solve(self, f, env, envT):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
-    for result in self.odeEngine.solve(f, env):
+
+    # debug
+    # implement odeEngine.inc() and use loop for several ode engine paralelly.
+    for result in self.odeEngine.solve(f, env, envT):
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
+    # end of debug
 
   def saveToFile(self):
     i = 0
@@ -54,6 +59,8 @@ f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - 
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
+envT = ode_time.ODETime(0, 10.0, 0.001)
+
 ode = TestODEBatch()
-ode.solve(f, env)
+ode.solve(f, env, envT)
 ode.saveToFile()
