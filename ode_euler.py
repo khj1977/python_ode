@@ -1,3 +1,5 @@
+import ode_env
+
 class ODEOneDimEulerMethod:
   def __init__(self, deltaT, startT, endT, startX, startXDot):
     self.deltaT = deltaT
@@ -22,7 +24,7 @@ class ODEOneDimEulerMethod:
     return self.startXDot
 
   # f is function object
-  def solve(self, f):
+  def solve(self, f, env):
     x = self.startX
     xDot = self.startXDot
     resultT = []
@@ -44,6 +46,11 @@ class ODEOneDimEulerMethod:
 
       xDot = xDot + ddx * self.deltaT
       x = x + xDot * self.deltaT
+
+      env.setX(x)
+      env.setXDot(xDot)
+      env.setXDDot(ddx)
+      env.setT(t)
 
       yield [t, ddx, xDot, x]
 

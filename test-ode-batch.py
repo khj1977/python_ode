@@ -1,5 +1,6 @@
 import ode_euler
 import batch
+import ode_env
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,9 +18,9 @@ class TestODEBatch(batch.Batch):
     self.resultX = []
 
 
-  def solve(self, f):
+  def solve(self, f, env):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
-    for result in self.odeEngine.solve(f):
+    for result in self.odeEngine.solve(f, env):
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
@@ -52,6 +53,7 @@ f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - 
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
+env = ode_env.ODEEnv()
 ode = TestODEBatch()
-ode.solve(f)
+ode.solve(f, env)
 ode.saveToFile()
