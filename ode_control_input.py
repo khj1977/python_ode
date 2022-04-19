@@ -14,6 +14,10 @@ class ControlInput:
 
         return self
 
+    def setCoef(self, coefs):
+        self.coefs = coefs
+        return self
+
     def setControlInput(self, controlInput):
         self.u = ControlInput
 
@@ -22,6 +26,13 @@ class ControlInput:
     def calcControlInput(self):
         # debug
         # implement this method
+        # determine linear control input based on coefs and state
+        u = 0.0
+        for x in self.getControlInput.yieldState():
+            for a in self.coefs.yieldCoefs():
+                u = u + x * a
+                
+        self.setControlInput(u)
         return self
         # end of debug
  

@@ -1,5 +1,4 @@
-from operator import truediv
-
+# from operator import truediv
 
 class Observer:
   def __init__(self, odeEngineReal, odeEngineObserver):
@@ -18,16 +17,28 @@ class Observer:
     return self
 
   def xinc(self):
+    # debug
+    # control input to applied to observer
     self.odeEngineObserver.inc()
+    # end of debug
 
     return self
 
+  # debug
+  # implement the following method
   def calcControlInput(self):
     return self
+  # end of debug
 
+  # debug
+  # implement the following method
+  # this may not br required since control is set to ode engine.
   def applyControlInput(self):
     return self
+  # end of debug
 
+  # debug
+  # this method is obsolete
   def solve(self):
     t = 0.0
     e = be0
@@ -42,3 +53,4 @@ class Observer:
       # errorData = nominalData - observerData (and feedforward for K-DO) 
       # control input = K(t) * error
       # yield estimated uncertainty.
+  # end of debug
