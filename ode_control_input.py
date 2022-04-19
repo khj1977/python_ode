@@ -23,6 +23,7 @@ class ControlInput:
 
         return self
 
+    # linear control input which is a * x where they are vector.
     def calcControlInput(self):
         # debug
         # implement this method
@@ -31,7 +32,7 @@ class ControlInput:
         for x in self.getControlInput.yieldState():
             for a in self.coefs.yieldCoefs():
                 u = u + x * a
-                
+
         self.setControlInput(u)
         return self
         # end of debug
