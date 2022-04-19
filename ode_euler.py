@@ -18,6 +18,8 @@ class ODEOneDimEulerMethod:
     self.env = env
     self.envT = envT
 
+    self.controlInput = controlInput
+
     self.resultT = []
     self.resultX = []
     self.resultXDot = []
@@ -60,7 +62,7 @@ class ODEOneDimEulerMethod:
     # ODE
     # Hack the following to use multiple number of f()s to handle observer.
     # make t, x, xdot env to enclose to handle multple phase env namely: PhaseEnv
-    ddx = self.diffEQ(t, x, xDot)
+    ddx = self.diffEQ(t, x, xDot) + self.controlInput.getControlInput()
     # end of ODE
 
     # xDot = xDot + ddx * self.deltaT
