@@ -1,7 +1,7 @@
 class ControlInput:
     def __init__(self):
         self.u = 0.0
-        return self
+        # return self
     
     def getControlInput(self):
         return self.u
