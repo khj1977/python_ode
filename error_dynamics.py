@@ -1,5 +1,4 @@
-from tkinter import E
-
+import ode_env
 
 class ErrorDynamics:
 
