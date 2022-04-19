@@ -15,6 +15,10 @@ class ErrorDynamics:
 
         return self
 
+    def yieldStates(self):
+        yield self.x1
+        yield self.x2
+
     def get2Norm(self):
         self.calcErr()
         e = self.err
