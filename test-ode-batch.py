@@ -2,6 +2,7 @@ import ode_euler
 import batch
 import ode_env
 import ode_time
+import ode_control_input
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,11 +10,11 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, f, env, envT):
+  def __init__(self, f, env, envT, controlInput):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 5.0, 5.0, f, env, envT)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 5.0, 5.0, f, env, envT, controlInput)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []
@@ -65,7 +66,8 @@ f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
 envT = ode_time.ODETime(0, 10.0, 0.01)
+controlInput = ode_control_input.ControlInput()
 
-ode = TestODEBatch(f, env, envT)
+ode = TestODEBatch(f, env, envT, controlInput)
 ode.solve()
 ode.saveToFile()

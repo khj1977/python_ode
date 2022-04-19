@@ -1,10 +1,10 @@
 import ode_env
 
 class ODEOneDimEulerMethod:
-  def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
+  def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput):
     self.env = env
     self.envT = envT
-    
+
     self.deltaT = deltaT
     self.startT = startT
     self.endT = endT
