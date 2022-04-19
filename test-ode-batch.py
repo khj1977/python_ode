@@ -10,11 +10,11 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, f, env, envT, controlInput):
+  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInput):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100.0, 5.0, 5.0, f, env, envT, controlInput)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInput)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []
@@ -68,6 +68,7 @@ env = ode_env.ODEEnv()
 envT = ode_time.ODETime(0, 10.0, 0.01)
 controlInput = ode_control_input.ControlInput()
 
-ode = TestODEBatch(f, env, envT, controlInput)
+# def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
+ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envT, controlInput)
 ode.solve()
 ode.saveToFile()
