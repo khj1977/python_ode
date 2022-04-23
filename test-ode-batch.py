@@ -68,7 +68,7 @@ class TestODEBatch(batch.Batch):
       self.controlResultXDot.append(self.controlInput.getControlInputDot())
     # end of debug
 
-  def saveToFile(self):
+  def saveToFile(self, xMin, xMax, yMin, yMax):
     i = 0
     for t in self.resultT:
       x = self.resultX[i]
@@ -78,8 +78,10 @@ class TestODEBatch(batch.Batch):
       i = i + 1
 
     # プロット
-    plt.xlim(-30.0, 30.0)
-    plt.ylim(-30.0, 30.0)
+    # debug
+    plt.xlim(xMin, xMax)
+    plt.ylim(yMin, yMax)
+    # end of debug
 
     # plt.plot(self.resultT, self.resultX, label="test")
     plt.plot(self.resultXDot, self.resultX, label="actual system")
@@ -120,4 +122,4 @@ controlInput.setState(errorDynamics)
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
 ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput)
 ode.solve()
-ode.saveToFile()
+ode.saveToFile(-30.0, 30.0, -30.0, 30.0)
