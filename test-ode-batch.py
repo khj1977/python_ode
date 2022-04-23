@@ -1,3 +1,4 @@
+from tracemalloc import start
 import ode_euler
 import batch
 import ode_env
@@ -12,11 +13,12 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInput):
+  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInput)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput())
+    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     self.resultT = []
     self.resultXDot = []
@@ -79,6 +81,6 @@ errorDynamics = error_dynamics.ErrorDynamics(env, envObserver)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envT, controlInput)
+ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envObserver, envT, controlInput)
 ode.solve()
 ode.saveToFile()
