@@ -27,6 +27,9 @@ class Observer:
 
     return result
 
+  def getControlInput(self):
+    return self.controlInput
+
   # debug
   # implement the following method
   def calcControlInput(self):

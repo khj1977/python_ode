@@ -19,6 +19,18 @@ class ErrorDynamics:
         yield self.x1
         yield self.x2
 
+    def getX1(self):
+        return self.x1
+
+    def getX2(self):
+        return self.x2
+
+    def getX1Dot(self):
+        return self.x1.getXDot()
+
+    def getX2Dot(self):
+        return self.x2.getXDot()
+
     def get2Norm(self):
         self.calcErr()
         e = self.err
