@@ -14,18 +14,18 @@ class Observer:
   def inc(self):
     controlInput = self.calcControlInput()
     self.applyControlInput(controlInput)
-    self.xinc()
+    result = self.xinc()
 
-    return self
+    return result
 
   def xinc(self):
     # debug
     # control input to applied to observer
     # odeEngineRelal is inc()ed by another method or scope.
-    self.odeEngineObserver.inc()
+    result = self.odeEngineObserver.inc()
     # end of debug
 
-    return self
+    return result
 
   # debug
   # implement the following method

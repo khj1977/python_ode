@@ -23,6 +23,9 @@ class TestODEBatch(batch.Batch):
     self.resultT = []
     self.resultXDot = []
     self.resultX = []
+
+    self.observerResultXDot = []
+    self.observerResultX = []
     self.envT = envT
 
 
@@ -35,9 +38,13 @@ class TestODEBatch(batch.Batch):
     # for result in self.odeEngine.solve(f, env, envT):
       # self.odeEngine.solve(f, env, envT)
       result = self.odeEngine.inc()
+      resultObserver = self.observerEngine.inc()
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
+
+      self.observerResultX.append(resultObserver[1])
+      self.observerResultXDot.append(resultObserver[2])
     # end of debug
 
   def saveToFile(self):
@@ -51,7 +58,8 @@ class TestODEBatch(batch.Batch):
 
     # プロット
     # plt.plot(self.resultT, self.resultX, label="test")
-    plt.plot(self.resultXDot, self.resultX, label="test")
+    plt.plot(self.resultXDot, self.resultX, label="actual system")
+    plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
 
     # 凡例の表示
     plt.legend()
@@ -74,7 +82,7 @@ envT = ode_time.ODETime(0, 10.0, 0.01)
 
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
-controlInput.setCoef([1, 2])
+controlInput.setCoef([10, 10])
 
 # def __init__(self, xEnv1, xEnv2):
 errorDynamics = error_dynamics.ErrorDynamics(env, envObserver)
