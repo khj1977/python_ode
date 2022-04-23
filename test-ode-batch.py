@@ -28,12 +28,15 @@ class TestODEBatch(batch.Batch):
     self.observerResultX = []
     self.envT = envT
 
+    self.errorResultXDot = []
+    self.errorResultX = []
 
   def solve(self):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
+    errorDynamics = self.observerEngine.getControlInput().getState()
     for t in self.envT.startClock():
     # for result in self.odeEngine.solve(f, env, envT):
       # self.odeEngine.solve(f, env, envT)
@@ -45,6 +48,12 @@ class TestODEBatch(batch.Batch):
 
       self.observerResultX.append(resultObserver[1])
       self.observerResultXDot.append(resultObserver[2])
+
+      # debug
+      # is it really getX1()? There may be a bug
+      self.errorResultX.append(errorDynamics.getX1())
+      self.errorResultXDot.append(errorDynamics.getX2())
+      # end of debug
     # end of debug
 
   def saveToFile(self):
@@ -60,6 +69,7 @@ class TestODEBatch(batch.Batch):
     # plt.plot(self.resultT, self.resultX, label="test")
     plt.plot(self.resultXDot, self.resultX, label="actual system")
     plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
+    plt.plot(self.errorResultXDot, self.errorResultX, label="error")
 
     # 凡例の表示
     plt.legend()

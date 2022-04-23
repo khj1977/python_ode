@@ -39,6 +39,9 @@ class ODEOneDimEulerMethod:
   def startXDot(self):
     return self.startXDot
 
+  def getControlInput(self):
+    return self.controlInput
+
   def inc(self):
     # debug
     # return [t, ddx, xDot, x]
