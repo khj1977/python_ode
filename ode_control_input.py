@@ -1,10 +1,15 @@
 class ControlInput:
     def __init__(self):
         self.u = 0.0
+        self.prevU = 0.0
         # return self
     
     def getControlInput(self):
         return self.u
+
+    def getControlInputDot(self):
+        deltaT = self.envT.getDeltaT()
+        return (self.u - self.prevU) / deltaT
 
     def getState(self):
         return self.env
@@ -33,6 +38,7 @@ class ControlInput:
         # debug
         # implement this method
         # determine linear control input based on coefs and state
+        self.prevU = self.u
         u = 0.0
         for x in self.getControlInput.yieldState():
             for a in self.coefs.yieldCoefs():
