@@ -2,12 +2,18 @@ import ode_env
 
 class ErrorDynamics:
 
-    def __init__(self, xEnv1, xEnv2):
+    def __init__(self, xEnv1, xEnv2, envT):
         self.x1 = xEnv1
         self.x2 = xEnv2   
-        self.calcErr()
+        self.envT = envT
+
+        self.err = 0.0
+        self.errDot = 0.0
+        # self.calcErr()
         
     def calcErr(self):
+        self.prevErr = self.err
+
         x1 = self.x1.getX()
         x2 = self.x2.getX()
 
@@ -15,9 +21,15 @@ class ErrorDynamics:
 
         return self
 
+    def calcErrDot(self):
+       deltaT = self.envT.getDeltaT()
+       self.errDot = (self.err - self.prevErr) / deltaT
+
+       return self
+
     def yieldStates(self):
-        yield self.x1
-        yield self.x2
+        yield self.getErrDot()
+        yield self.getErr()
 
     def getX1(self):
         return self.x1.getX()
@@ -31,11 +43,11 @@ class ErrorDynamics:
     def getX2Dot(self):
         return self.x2.getXDot()
 
-    def getErrDot(self):
-        return self.x1
-
     def getErr(self):
-        return self.x2
+        return self.err
+
+    def getErrDot(self):
+        return self.errDot
 
     def get2Norm(self):
         self.calcErr()

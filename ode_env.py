@@ -33,7 +33,7 @@ class ODEEnv:
     def getT(self):
         return self.t
 
-    def yieldState(self):
+    def yieldStates(self):
         yield self.xddot
         yield self.xdot
         yield self.x

@@ -12,8 +12,8 @@ class Observer:
     self.bresultXDot = []
 
   def inc(self):
-    controlInput = self.calcControlInput()
-    self.applyControlInput(controlInput)
+    self.calcControlInput()
+    self.applyControlInput(self.controlInput)
     result = self.xinc()
 
     return result
@@ -33,13 +33,16 @@ class Observer:
   # debug
   # implement the following method
   def calcControlInput(self):
-    return self
+    # return self
+    self.controlInput.getStates().calcErr()
+    self.controlInput.getStates().calcErrDot()
+    self.controlInput.calcControlInput()
   # end of debug
 
   # debug
   # implement the following method
   # this may not br required since control is set to ode engine.
-  def applyControlInput(self):
+  def applyControlInput(self, controlInput):
     return self
   # end of debug
 

@@ -11,7 +11,7 @@ class ControlInput:
         deltaT = self.envT.getDeltaT()
         return (self.u - self.prevU) / deltaT
 
-    def getState(self):
+    def getStates(self):
         return self.env
 
     def setState(self, env):
@@ -29,7 +29,7 @@ class ControlInput:
         return self
 
     def setControlInput(self, controlInput):
-        self.u = ControlInput
+        self.u = controlInput
 
         return self
 
@@ -40,9 +40,9 @@ class ControlInput:
         # determine linear control input based on coefs and state
         self.prevU = self.u
         u = 0.0
-        for x in self.getControlInput.yieldState():
+        for x in self.env.yieldStates():
             for a in self.coefs.yieldCoefs():
-                u = u + x * a
+                u = u + a * x
 
         self.setControlInput(u)
         return self

@@ -1,4 +1,5 @@
 from tracemalloc import start
+from ode_coefs import ODECoefs
 import ode_euler
 import batch
 import ode_env
@@ -20,6 +21,8 @@ class TestODEBatch(batch.Batch):
     self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput())
     self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput)
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
+    # def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
+    self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
     self.controlInput = controlInput
 
     self.resultT = []
@@ -41,12 +44,13 @@ class TestODEBatch(batch.Batch):
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
-    errorDynamics = self.observerEngine.getControlInput().getState()
+    errorDynamics = self.observerEngine.getControlInput().getStates()
     for t in self.envT.startClock():
     # for result in self.odeEngine.solve(f, env, envT):
       # self.odeEngine.solve(f, env, envT)
       result = self.odeEngine.inc()
-      resultObserver = self.observerEngine.inc()
+      # resultObserver = self.observerEngine.inc()
+      resultObserver = self.observer.inc()
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
@@ -74,6 +78,9 @@ class TestODEBatch(batch.Batch):
       i = i + 1
 
     # プロット
+    plt.xlim(-30.0, 30.0)
+    plt.ylim(-30.0, 30.0)
+
     # plt.plot(self.resultT, self.resultX, label="test")
     plt.plot(self.resultXDot, self.resultX, label="actual system")
     plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
@@ -102,10 +109,12 @@ envT = ode_time.ODETime(0, 10.0, 0.01)
 
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
-controlInput.setCoef([1.0, 4.0])
+coefs = ODECoefs()
+coefs.setCoefs([1.0, 4.0])
+controlInput.setCoef(coefs)
 
 # def __init__(self, xEnv1, xEnv2):
-errorDynamics = error_dynamics.ErrorDynamics(env, envObserver)
+errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):

@@ -3,7 +3,7 @@ class ODECoefs:
         pass
 
     def setCoefs(self, coefsList):
-        self.coef = coefs
+        self.coef = coefsList
 
     def yieldCoefs(self):
         for a in self.coef:
