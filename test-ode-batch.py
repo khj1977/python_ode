@@ -3,6 +3,8 @@ import batch
 import ode_env
 import ode_time
 import ode_control_input
+import observer
+import error_dynamics
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -65,10 +67,16 @@ f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
+envObserver = ode_env.ODEEnv()
 envT = ode_time.ODETime(0, 10.0, 0.01)
+
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
 controlInput.setCoef([1, 2])
+
+# def __init__(self, xEnv1, xEnv2):
+errorDynamics = error_dynamics.ErrorDynamics(env, envObserver)
+controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
 ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envT, controlInput)
