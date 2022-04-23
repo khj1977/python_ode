@@ -67,6 +67,8 @@ f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
 env = ode_env.ODEEnv()
 envT = ode_time.ODETime(0, 10.0, 0.01)
 controlInput = ode_control_input.ControlInput()
+controlInput.setEnvT(envT)
+controlInput.setCoef([1, 2])
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
 ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envT, controlInput)

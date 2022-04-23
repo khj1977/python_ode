@@ -14,6 +14,11 @@ class ControlInput:
 
         return self
 
+    # generally for nonlinear time varying control input.
+    def setEnvT(self, envT):
+        self.envT = envT
+        return self
+
     def setCoef(self, coefs):
         self.coefs = coefs
         return self

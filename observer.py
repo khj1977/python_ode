@@ -1,9 +1,11 @@
 # from operator import truediv
 
 class Observer:
-  def __init__(self, odeEngineReal, odeEngineObserver):
+  def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
     self.odeEngineReal = odeEngineReal
     self.odeEngineObserver = odeEngineObserver
+
+    self.controlInput = controlInput
 
     self.bresultT = []
     self.bresultX = []
@@ -19,6 +21,7 @@ class Observer:
   def xinc(self):
     # debug
     # control input to applied to observer
+    # odeEngineRelal is inc()ed by another method or scope.
     self.odeEngineObserver.inc()
     # end of debug
 
