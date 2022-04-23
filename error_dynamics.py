@@ -23,7 +23,7 @@ class ErrorDynamics:
         return self.x1.getX()
 
     def getX2(self):
-        return self.x2.getX()
+        return self.x1.getXDot()
 
     def getX1Dot(self):
         return self.x1.getXDot()
