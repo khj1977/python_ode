@@ -79,10 +79,11 @@ class TestODEBatch(batch.Batch):
     
 
 # ddx = f(t, x, xDot)
-f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
-# f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot - 2.0 * xDot**3
+# f = lambda t, x, xDot: -1.0 * x - 0.5 * xDot
+# f = lambda t, x, xDot: -1.0 * x - 5.0 * xDot - 2.0 * xDot**3
+# f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot - 1.0 * xDot**3
 # f = lambda t, x, xDot: - 6.0 * x - 5.0 * xDot - 10.0 * t * x
-# f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
+f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # return (resultT, resultX, resultXDot)
@@ -92,13 +93,13 @@ envT = ode_time.ODETime(0, 10.0, 0.01)
 
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
-controlInput.setCoef([10, 10])
+controlInput.setCoef([1.0, 4.0])
 
 # def __init__(self, xEnv1, xEnv2):
 errorDynamics = error_dynamics.ErrorDynamics(env, envObserver)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-ode = TestODEBatch(0.01, 0, 100.0, 10.0, 5.0, f, env, envObserver, envT, controlInput)
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput)
 ode.solve()
 ode.saveToFile()
