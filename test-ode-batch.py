@@ -58,6 +58,9 @@ class TestODEBatch(batch.Batch):
       result = self.odeEngine.inc()
       # resultObserver = self.observerEngine.inc()
       resultObserver = self.observer.inc()
+      self.disturbance.calcDynamics()
+      self.disturbance.calcDisturbanceDot()
+      
       self.resultT.append(result[0])
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
