@@ -20,6 +20,7 @@ class TestODEBatch(batch.Batch):
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
     self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
+    self.disturbance = disturbance
 
     disturbanceF = lambda t, x, xDot: 0.0
     self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, ode_disturbance.Disturbance(disturbanceF, env, envT))
@@ -41,6 +42,9 @@ class TestODEBatch(batch.Batch):
 
     self.controlResultXDot = []
     self.controlResultX = []
+
+    self.disturbanceResultXDot = []
+    self.disturbanceResultX = []
 
   def solve(self):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
@@ -69,6 +73,8 @@ class TestODEBatch(batch.Batch):
 
       self.controlResultX.append(self.controlInput.getControlInput())
       self.controlResultXDot.append(self.controlInput.getControlInputDot())
+
+      # add disturbance array to obtain dynamics of disturbance to list
     # end of debug
 
   def saveToFile(self, xMin, xMax, yMin, yMax):
@@ -115,7 +121,7 @@ envT = ode_time.ODETime(0, 10.0, 0.01)
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
 coefs = ODECoefs()
-coefs.setCoefs([1.0, 4.0])
+coefs.setCoefs([3.0, 4.0])
 controlInput.setCoef(coefs)
 
 # debug

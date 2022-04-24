@@ -7,11 +7,14 @@ class Disturbance:
     # debug
     # implement the following method.
     def getDynamics(self):
-        x = self.envX.getX()
-        xDot = self.envX.getXDot()
+        self.x = self.envX.getX()
+        self.xDot = self.envX.getXDot()
         t = self.envT.getT()
 
-        val = self.eq(t, x, xDot)
+        val = self.eq(t, self.x, self.xDot)
 
         return val
     # end of debug
+
+    def getStates(self):
+        return [self.envT.getT(), self.x, self.xDot]
