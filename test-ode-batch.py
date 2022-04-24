@@ -120,7 +120,9 @@ controlInput.setCoef(coefs)
 
 # debug
 # define eq which is first arg.
-disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
+# disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x
 disturbance = ode_disturbance.Disturbance(disturbanceF, env, envT)
 # end of debug
 
