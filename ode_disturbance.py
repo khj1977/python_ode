@@ -26,6 +26,7 @@ class Disturbance:
         deltaT = self.envT.getDeltaT()
         disturbanceDot = diff / deltaT
         self.disturbanceDot = disturbanceDot
+
         return self
 
     def getStates(self):
