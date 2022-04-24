@@ -21,7 +21,9 @@ class Disturbance:
 
     def calcDisturbanceDot(self):
         self.prevDisturbance = self.disturbance
+        # debug
         self.calcDynamics()
+        # end of debug
         diff = self.disturbance - self.prevDisturbance
         deltaT = self.envT.getDeltaT()
         disturbanceDot = diff / deltaT
