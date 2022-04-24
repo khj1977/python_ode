@@ -75,6 +75,9 @@ class TestODEBatch(batch.Batch):
       self.controlResultXDot.append(self.controlInput.getControlInputDot())
 
       # add disturbance array to obtain dynamics of disturbance to list
+      disturbanceVals = self.disturbance.getStates()
+      self.disturbanceResultX.append(disturbanceVals[1])
+      self.disturbanceResultXDot.append(disturbanceVals[2])
     # end of debug
 
   def saveToFile(self, xMin, xMax, yMin, yMax):
@@ -97,7 +100,7 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
     plt.plot(self.errorResultXDot, self.errorResultX, label="error")
     plt.plot(self.controlResultXDot, self.controlResultX, label="control")
-
+    plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
     # 凡例の表示
     plt.legend()
 
