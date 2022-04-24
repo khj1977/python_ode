@@ -20,7 +20,9 @@ class TestODEBatch(batch.Batch):
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
     self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
-    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, ode_disturbance.Disturbance(False))
+
+    disturbanceF = lambda t, x, xDot: 0.0
+    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, ode_disturbance.Disturbance(disturbanceF, env, envT))
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     # def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
@@ -118,7 +120,8 @@ controlInput.setCoef(coefs)
 
 # debug
 # define eq which is first arg.
-disturbance = ode_disturbance.Disturbance(False)
+disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+disturbance = ode_disturbance.Disturbance(disturbanceF, env, envT)
 # end of debug
 
 # def __init__(self, xEnv1, xEnv2):
