@@ -5,6 +5,7 @@ import batch
 import ode_env
 import ode_time
 import ode_control_input
+import ode_disturbance
 import observer
 import error_dynamics
 import sys
@@ -14,12 +15,12 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput):
+  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput())
-    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
+    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, ode_disturbance.Disturbance(False))
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     # def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
@@ -115,11 +116,16 @@ coefs = ODECoefs()
 coefs.setCoefs([1.0, 4.0])
 controlInput.setCoef(coefs)
 
+# debug
+# define eq which is first arg.
+disturbance = ode_disturbance.Disturbance(False)
+# end of debug
+
 # def __init__(self, xEnv1, xEnv2):
 errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput)
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput, disturbance)
 ode.solve()
 ode.saveToFile(-30.0, 30.0, -30.0, 30.0)

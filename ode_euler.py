@@ -1,7 +1,7 @@
 import ode_env
 
 class ODEOneDimEulerMethod:
-  def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput):
+  def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, disturbance):
     self.env = env
     self.envT = envT
 
@@ -19,6 +19,7 @@ class ODEOneDimEulerMethod:
     self.envT = envT
 
     self.controlInput = controlInput
+    self.disturbance = disturbance
 
     self.resultT = []
     self.resultX = []
@@ -68,7 +69,7 @@ class ODEOneDimEulerMethod:
     # ODE
     # Hack the following to use multiple number of f()s to handle observer.
     # make t, x, xdot env to enclose to handle multple phase env namely: PhaseEnv
-    ddx = self.diffEQ(t, x, xDot) + self.controlInput.getControlInput()
+    ddx = self.diffEQ(t, x, xDot) + self.controlInput.getControlInput() + self.disturbance.getDynamics()
     # ddx = self.diffEQ(t, x, xDot)
     # end of ODE
 
