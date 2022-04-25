@@ -12,8 +12,8 @@ class ODETime:
         while True:
             if self.t > self.endT:
                 break
-            yield self.t
             self.t = self.t + self.deltaT
+            yield self.t
             
         return self
 
