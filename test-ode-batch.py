@@ -102,6 +102,7 @@ class TestODEBatch(batch.Batch):
     # end of debug
 
     # plt.plot(self.resultT, self.resultX, label="test")
+
     plt.plot(self.resultXDot, self.resultX, label="actual system")
     plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
     plt.plot(self.errorResultXDot, self.errorResultX, label="error")
