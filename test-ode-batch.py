@@ -156,6 +156,7 @@ errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
+# def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
 ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput, disturbance)
 ode.solve()
 ode.saveToFile(-30.0, 30.0, -30.0, 30.0)
