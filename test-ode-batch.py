@@ -124,8 +124,10 @@ class TestODEBatch(batch.Batch):
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
-f = lambda t, x, xDot: -3.0 * x - 0.001 * xDot
+# f = lambda t, x, xDot: -3.0 * x - 0.001 * xDot
+f = lambda t, x, xDot: -3.0 * x
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
 envObserver = ode_env.ODEEnv()
@@ -135,6 +137,7 @@ controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
 coefs = ODECoefs()
 coefs.setCoefs([3.0, 15.0])
+# coefs.setCoefs([10.0, 15.0])
 # coefs.setCoefs([6.0, 5.0])
 controlInput.setCoef(coefs)
 
@@ -143,8 +146,8 @@ controlInput.setCoef(coefs)
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 4.0 * math.sin(t)
-disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
-# disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
+disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
 #disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
 # disturbanceF = lambda t, x, xDot: 6.0 * math.sin(t)
