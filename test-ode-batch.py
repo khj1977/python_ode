@@ -105,10 +105,10 @@ class TestODEBatch(batch.Batch):
     # plt.plot(self.resultT, self.resultX, label="test")
 
     plt.plot(self.resultXDot, self.resultX, label="actual system")
-    plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
-    plt.plot(self.errorResultXDot, self.errorResultX, label="error")
-    plt.plot(self.controlResultXDot, self.controlResultX, label="control")
-    plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
+    #plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
+    #plt.plot(self.errorResultXDot, self.errorResultX, label="error")
+    #plt.plot(self.controlResultXDot, self.controlResultX, label="control")
+    #plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
     # 凡例の表示
     plt.legend()
 
@@ -127,7 +127,10 @@ class TestODEBatch(batch.Batch):
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.001 * xDot
-f = lambda t, x, xDot: -3.0 * x
+# f = lambda t, x, xDot: -3.0 * x
+# f = lambda t, x, xDot: -3.0 * x - 0.1 * x * xDot
+# f = lambda t, x, xDot: -3.0 * x - 0.4 * math.sin(x) * x * xDot
+f = lambda t, x, xDot: -3.0 * x - 2.0 * math.sin(1.0 * x) * x * xDot
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
 envObserver = ode_env.ODEEnv()
@@ -147,7 +150,8 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 4.0 * math.sin(t)
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
-disturbanceF = lambda t, x, xDot: 0.0
+disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
+# disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
 #disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
 # disturbanceF = lambda t, x, xDot: 6.0 * math.sin(t)
@@ -162,7 +166,7 @@ controlInput.setState(errorDynamics)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
 ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput, disturbance)
 ode.solve()
-ode.saveToFile(-30.0, 30.0, -30.0, 30.0)
-# ode.saveToFile(-0.5, 0.5, -0.5, 0.5)
+ode.saveToFile(-70.0, 70.0, -500.0, 500.0)
+# ode.saveToFile(-2.5, 2.5, -2.5, 2.5)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
