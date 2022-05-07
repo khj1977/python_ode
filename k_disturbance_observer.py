@@ -14,6 +14,7 @@ class KDisturbanceObserver:
         self.envT = envT
         self.states = ODEEnv()
         self.f = f
+        self.controlInputReal = controlInputReal
         # self.controlInput = controlInput
         # control input for observer not actual system or modified refernece signal.
         self.controlInput = ControlInput()
@@ -54,6 +55,8 @@ class KDisturbanceObserver:
         self.calcControlInput()
         self.applyControlInput(self.controlInput)
         result = self.xinc()
+
+        self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
 
         # debug
         # print(self.odeEngineFF.getStates().getX())
