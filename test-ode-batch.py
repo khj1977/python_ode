@@ -67,8 +67,8 @@ class TestODEBatch(batch.Batch):
       # self.odeEngine.solve(f, env, envT)
       result = self.odeEngine.inc()
       # resultObserver = self.observerEngine.inc()
-      resultObserver = self.observer.inc()
-      # resultKDO = self.disturbanceObserver.inc()
+      # resultObserver = self.observer.inc()
+      resultKDO = self.disturbanceObserver.inc()
 
       # debug
       # self.disturbance.calcDynamics()
@@ -79,11 +79,11 @@ class TestODEBatch(batch.Batch):
       self.resultX.append(result[1])
       self.resultXDot.append(result[2])
 
-      self.observerResultX.append(resultObserver[1])
-      self.observerResultXDot.append(resultObserver[2])
+      # self.observerResultX.append(resultObserver[1])
+      # self.observerResultXDot.append(resultObserver[2])
 
-      # self.disturbanceObserverResultX.append(resultKDO[1])
-      # self.disturbanceObserverResultXDot.append(resultKDO[2])
+      self.disturbanceObserverResultX.append(resultKDO[1])
+      self.disturbanceObserverResultXDot.append(resultKDO[2])
 
       # debug
       # is it really getX1()? There may be a bug
@@ -118,10 +118,11 @@ class TestODEBatch(batch.Batch):
     # plt.plot(self.resultT, self.resultX, label="test")
 
     plt.plot(self.resultXDot, self.resultX, label="actual system")
-    plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
+    # plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
     plt.plot(self.errorResultXDot, self.errorResultX, label="error")
     plt.plot(self.controlResultXDot, self.controlResultX, label="control")
     plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
+    plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
     # 凡例の表示
     plt.legend()
 
