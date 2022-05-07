@@ -47,6 +47,10 @@ class KDisturbanceObserver:
     # debug
     # implement the following method
     def calcControlInput(self):
+        # debug
+        # make this algo adaptive.
+        # end of debug
+
         # return self
         self.controlInput.getStates().calcErr()
         self.controlInput.getStates().calcErrDot()
