@@ -42,7 +42,7 @@ class KDisturbanceObserver:
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
 
         coefs = ode_coefs.ODECoefs()
-        coefs.setCoefs([3.0, 15.0])
+        coefs.setCoefs([-3.0, -15.0])
         # coefs.setCoefs([10.0, 15.0])
         # coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
@@ -59,6 +59,7 @@ class KDisturbanceObserver:
         # print(self.odeEngineFF.getStates().getX())
         # print(self.modifiedSignalDynamics.getX())
         # print(self.states.getX())
+        # print(self.errorDynamics.getX())
         # end of debug
 
         return result
@@ -72,6 +73,9 @@ class KDisturbanceObserver:
         # end of debug
 
         return result
+
+    def getEstimatedDisturbanceDynamics(self):
+        return self.controlInput
 
     # debug
     # implement the following method
