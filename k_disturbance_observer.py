@@ -1,9 +1,12 @@
 from posixpath import supports_unicode_filenames
 from error_dynamics import ErrorDynamics
 from ode_control_input import ControlInput
+from ode_disturbance import Disturbance
 from ode_env import ODEEnv
 import ode_euler
+import ode_coefs
 import ode_control_input
+import math
 
 class KDisturbanceObserver:
     def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
@@ -15,7 +18,10 @@ class KDisturbanceObserver:
         # control input for observer not actual system or modified refernece signal.
         self.controlInput = ControlInput()
 
-        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, self.envT, controlInputReal)
+        # def __init__(self, eq, envX, envT):
+        disturbanceF = lambda t, x, xDot: 0.0
+        nullDisturbance = Disturbance(disturbanceF, self.states, self.envT)
+        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, controlInputReal, nullDisturbance)
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
@@ -27,9 +33,20 @@ class KDisturbanceObserver:
         # controlInput.setState(errorDynamics)
         self.controlInput.setState(self.modifiedSignalDynamics)
 
-        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInput)
+        # self.f = lambda x, t, z: 0.0
+
+        # debug
+        # really self.states?
+        # end of debug
+        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInput, nullDisturbance)
 
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
+
+        coefs = ode_coefs.ODECoefs()
+        coefs.setCoefs([3.0, 15.0])
+        # coefs.setCoefs([10.0, 15.0])
+        # coefs.setCoefs([6.0, 5.0])
+        self.controlInput.setCoef(coefs)
 
         self.controlInput.setState(self.errorDynamics)
 
@@ -45,6 +62,7 @@ class KDisturbanceObserver:
         # debug
         # control input to applied to observer
         # odeEngineRelal is inc()ed by another method or scope.
+        self.odeEngineFF.inc()
         result = self.disturbanceObserverEngine.inc()
         # end of debug
 

@@ -1,4 +1,5 @@
 from tracemalloc import start
+from k_disturbance_observer import KDisturbanceObserver
 from ode_coefs import ODECoefs
 import ode_euler
 import batch
@@ -20,7 +21,8 @@ class TestODEBatch(batch.Batch):
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
+    controlInputReal = ode_control_input.ControlInput()
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, disturbance)
     self.disturbance = disturbance
 
     disturbanceF = lambda t, x, xDot: 0.0
@@ -30,12 +32,19 @@ class TestODEBatch(batch.Batch):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
     self.controlInput = controlInput
 
+    # def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
+    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, envT, f, startX, startXDot)
+
     self.resultT = []
     self.resultXDot = []
     self.resultX = []
 
     self.observerResultXDot = []
     self.observerResultX = []
+
+    self.disturbanceObserverResultX = []
+    self.disturbanceObserverResultXDot = []
+
     self.envT = envT
 
     self.errorResultXDot = []
@@ -59,6 +68,7 @@ class TestODEBatch(batch.Batch):
       result = self.odeEngine.inc()
       # resultObserver = self.observerEngine.inc()
       resultObserver = self.observer.inc()
+      resultKDO = self.disturbanceObserver.inc()
 
       # debug
       # self.disturbance.calcDynamics()
@@ -71,6 +81,9 @@ class TestODEBatch(batch.Batch):
 
       self.observerResultX.append(resultObserver[1])
       self.observerResultXDot.append(resultObserver[2])
+
+      self.disturbanceObserverResultX.append(resultKDO[1])
+      self.disturbanceObserverResultXDot.append(resultKDO[2])
 
       # debug
       # is it really getX1()? There may be a bug
