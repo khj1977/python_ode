@@ -55,6 +55,12 @@ class KDisturbanceObserver:
         self.applyControlInput(self.controlInput)
         result = self.xinc()
 
+        # debug
+        # print(self.odeEngineFF.getStates().getX())
+        # print(self.modifiedSignalDynamics.getX())
+        # print(self.states.getX())
+        # end of debug
+
         return result
 
     def xinc(self):
