@@ -29,7 +29,7 @@ class KDisturbanceObserver:
 
         self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInput)
 
-        self.errorDynamics = ErrorDynamics(self.modifiedSignalDynamics, self.disturbanceObserverEngine.getStates(), self.envT)
+        self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
 
         self.controlInput.setState(self.errorDynamics)
 
