@@ -31,7 +31,6 @@ class KDisturbanceObserver:
         # u = K(t) * e(t) where e(t)  = x - r_b where r_b = self.modifiedSignalDynamics
         # errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
         # controlInput.setState(errorDynamics)
-        self.controlInput.setState(self.modifiedSignalDynamics)
 
         # self.f = lambda x, t, z: 0.0
 
