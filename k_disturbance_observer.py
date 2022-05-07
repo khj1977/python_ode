@@ -46,7 +46,7 @@ class KDisturbanceObserver:
         # coefs.setCoefs([10.0, 15.0])
         # coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
-
+        self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
 
 

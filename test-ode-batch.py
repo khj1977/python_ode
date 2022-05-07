@@ -91,8 +91,8 @@ class TestODEBatch(batch.Batch):
       self.errorResultXDot.append(errorDynamics.getX2())
       # end of debug
 
-      self.controlResultX.append(self.controlInput.getControlInput())
-      self.controlResultXDot.append(self.controlInput.getControlInputDot())
+      self.controlResultX.append(self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInput())
+      self.controlResultXDot.append(self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInputDot())
 
       # add disturbance array to obtain dynamics of disturbance to list
       disturbanceVals = self.disturbance.getStates()
@@ -120,7 +120,7 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.resultXDot, self.resultX, label="actual system")
     # plt.plot(self.observerResultXDot, self.observerResultX, label="observer")
     plt.plot(self.errorResultXDot, self.errorResultX, label="error")
-    plt.plot(self.controlResultXDot, self.controlResultX, label="control")
+    plt.plot(self.controlResultXDot, self.controlResultX, label="estimated disturbance")
     plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
     plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
     # 凡例の表示
