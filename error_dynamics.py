@@ -31,6 +31,9 @@ class ErrorDynamics:
         yield self.getErrDot()
         yield self.getErr()
 
+    def getX(self):
+        return self.getX1()
+
     def getX1(self):
         return self.x1.getX()
 

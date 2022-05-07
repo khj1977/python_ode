@@ -6,26 +6,32 @@ import ode_euler
 import ode_control_input
 
 class KDisturbanceObserver:
-    def __init__(self, odeEngineReal, controlInput, envT, f, startX, startXDot):
+    def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
         self.odeEngineReal = odeEngineReal
         self.envT = envT
         self.states = ODEEnv()
         self.f = f
-        self.controlInput = controlInput
+        # self.controlInput = controlInput
+        # control input for observer not actual system or modified refernece signal.
+        self.controlInput = ControlInput()
 
-        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, self.envT, controlInput)
+        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, self.envT, controlInputReal)
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
         self.modifiedSignalDynamics = ErrorDynamics(self.odeEngineReal.getStates(), self.odeEngineFF.getStates(), self.envT)
-
+        
         # disturbance observer follows modified reference signal.
         # u = K(t) * e(t) where e(t)  = x - r_b where r_b = self.modifiedSignalDynamics
         # errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
         # controlInput.setState(errorDynamics)
         self.controlInput.setState(self.modifiedSignalDynamics)
 
-        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(env.getDeltaT, envT.getStartT(), envT.getEndT(), startX, startXDOt, self.f, self.states, envT, self.controlInput)
+        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInput)
+
+        self.errorDynamics = ErrorDynamics(self.modifiedSignalDynamics, self.disturbanceObserverEngine.getStates(), self.envT)
+
+        self.controlInput.setState(self.errorDynamics)
 
 
     def inc(self):
