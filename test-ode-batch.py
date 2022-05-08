@@ -21,19 +21,25 @@ class TestODEBatch(batch.Batch):
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, ode_control_input.ControlInput(), disturbance)
+
+    # debug
+    # refactor ODE engine to handle two control inputs for cancel out disturbance and 
+    # control of nominal system
     controlInputReal = ode_control_input.ControlInput()
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, disturbance)
+    controlInputNominalReal = ode_control_input.ControlInput()
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, controlInputNominalReal, disturbance)
     self.disturbance = disturbance
+    # end of debug
 
     disturbanceF = lambda t, x, xDot: 0.0
-    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, ode_disturbance.Disturbance(disturbanceF, env, envT))
+    self.observerEngine = ode_euler.ODEOneDimEulerMethod(deltaT, start, endT, startX + 2.0, startXDot + 2.0, f, observerEnvX, envT, controlInput, controlInputNominalReal,ode_disturbance.Disturbance(disturbanceF, env, envT))
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     # def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
     self.controlInput = controlInput
 
     # def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
-    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, envT, f, startX, startXDot, delta, rateLambda)
+    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda)
 
     self.resultT = []
 
@@ -204,4 +210,4 @@ ode.solve()
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-ode.saveToFileTime(100.0, -10.0, 10.0)
+ode.saveToFileTime(100.0, -100.0, 100.0)

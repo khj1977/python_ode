@@ -9,7 +9,7 @@ import ode_control_input
 import math
 
 class KDisturbanceObserver:
-    def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot, delta, rateLambda):
+    def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda):
         self.odeEngineReal = odeEngineReal
         self.envT = envT
         self.states = ODEEnv()
@@ -17,6 +17,7 @@ class KDisturbanceObserver:
         self.delta = delta
         self.rateLambda = rateLambda
         self.controlInputReal = controlInputReal
+        self.controlInputNominalReal = controlInputNominalReal
         # self.controlInput = controlInput
         # control input for observer not actual system or modified refernece signal.
         self.controlInput = ControlInput()
@@ -24,7 +25,7 @@ class KDisturbanceObserver:
         # def __init__(self, eq, envX, envT):
         disturbanceF = lambda t, x, xDot: 0.0
         nullDisturbance = Disturbance(disturbanceF, self.states, self.envT)
-        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, self.controlInputReal, nullDisturbance)
+        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, self. controlInputNominalReal, ControlInput(), nullDisturbance)
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
@@ -40,7 +41,7 @@ class KDisturbanceObserver:
         # debug
         # really self.states?
         # end of debug
-        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInput, nullDisturbance)
+        self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInputNominalReal, self.controlInput, nullDisturbance)
 
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
 
