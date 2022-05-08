@@ -89,6 +89,9 @@ class KDisturbanceObserver:
 
         return result
 
+    def getModifiedReference(self):
+        return self.modifiedSignalDynamics
+
     def getEstimatedDisturbanceDynamics(self):
         return self.controlInput
 
