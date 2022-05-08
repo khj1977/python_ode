@@ -54,6 +54,8 @@ class TestODEBatch(batch.Batch):
 
     self.modifiedReferemceResultX = []
 
+    self.ffResultX = []
+
     self.envT = envT
 
     self.errorResultXDot = []
@@ -72,6 +74,7 @@ class TestODEBatch(batch.Batch):
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
     errorDynamics = self.observerEngine.getControlInput().getStates()
     modifiedSignal = self.disturbanceObserver.getModifiedReference()
+    ff = self.disturbanceObserver.getFFSignal()
     for t in self.envT.startClock():
     # for result in self.odeEngine.solve(f, env, envT):
       # self.odeEngine.solve(f, env, envT)
@@ -96,6 +99,7 @@ class TestODEBatch(batch.Batch):
       self.disturbanceObserverResultXDot.append(resultKDO[2])
 
       self.modifiedReferemceResultX.append(modifiedSignal.getX())
+      self.ffResultX.append(ff.getX())
 
       # debug
       # is it really getX1()? There may be a bug
@@ -120,6 +124,7 @@ class TestODEBatch(batch.Batch):
     #plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
     #plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
+    plt.plot(self.resultT, self.ffResultX, label="ff signal")
 
     # 凡例の表示
     plt.legend()
