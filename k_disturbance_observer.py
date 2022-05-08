@@ -22,10 +22,14 @@ class KDisturbanceObserver:
         # control input for observer not actual system or modified refernece signal.
         self.controlInput = ControlInput()
 
+        # debug
+        # There may be bug around the following since the disturbance is not canceled 
+        # out if estimated disturbance is feedbacked but twice of estimated disturbance.
         # def __init__(self, eq, envX, envT):
         disturbanceF = lambda t, x, xDot: 0.0
         nullDisturbance = Disturbance(disturbanceF, self.states, self.envT)
         self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, self.controlInputReal, ControlInput(), nullDisturbance)
+        # end of debug
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
