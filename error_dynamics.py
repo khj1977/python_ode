@@ -52,7 +52,7 @@ class ErrorDynamics:
     def getErrDot(self):
         return self.errDot
 
-    def get2Norm(self):
+    def get2Norm2(self):
         self.calcErr()
         e = self.err
         norm = e * e

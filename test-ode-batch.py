@@ -16,7 +16,7 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
+  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
@@ -33,7 +33,7 @@ class TestODEBatch(batch.Batch):
     self.controlInput = controlInput
 
     # def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
-    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, envT, f, startX, startXDot)
+    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, envT, f, startX, startXDot, delta, rateLambda)
 
     self.resultT = []
     self.resultXDot = []
@@ -122,7 +122,7 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.errorResultXDot, self.errorResultX, label="error")
     plt.plot(self.controlResultXDot, self.controlResultX, label="estimated disturbance")
     plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
-    plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
+    # plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
     # 凡例の表示
     plt.legend()
 
@@ -181,7 +181,7 @@ controlInput.setState(errorDynamics)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
 env.setX(10.0)
 env.setXDot(5.0)
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, controlInput, disturbance)
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance)
 ode.solve()
 ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)

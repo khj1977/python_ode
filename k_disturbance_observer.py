@@ -9,11 +9,13 @@ import ode_control_input
 import math
 
 class KDisturbanceObserver:
-    def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
+    def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot, delta, rateLambda):
         self.odeEngineReal = odeEngineReal
         self.envT = envT
         self.states = ODEEnv()
         self.f = f
+        self.delta = delta
+        self.rateLambda = rateLambda
         self.controlInputReal = controlInputReal
         # self.controlInput = controlInput
         # control input for observer not actual system or modified refernece signal.
@@ -85,6 +87,14 @@ class KDisturbanceObserver:
     def calcControlInput(self):
         # debug
         # make this algo adaptive.
+        # end of debug
+        lyapunovValue = self.errorDynamics.get2Norm2()
+        if lyapunovValue < self.delta:
+            lambdaDot = 0.0
+        else:
+            lambdaDot = self.rateLambda
+        # debug
+        # calc gain with lanbdaDot
         # end of debug
 
         # return self
