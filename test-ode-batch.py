@@ -106,8 +106,8 @@ class TestODEBatch(batch.Batch):
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
     plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    # plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     
     # 凡例の表示
     plt.legend()
@@ -198,10 +198,10 @@ env.setX(10.0)
 env.setXDot(5.0)
 ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance)
 ode.solve()
-ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
+# ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-# ode.saveToFileTime(100.0, -10.0, 10.0)
+ode.saveToFileTime(100.0, -10.0, 10.0)
