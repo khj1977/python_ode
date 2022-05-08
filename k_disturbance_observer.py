@@ -25,7 +25,7 @@ class KDisturbanceObserver:
         # def __init__(self, eq, envX, envT):
         disturbanceF = lambda t, x, xDot: 0.0
         nullDisturbance = Disturbance(disturbanceF, self.states, self.envT)
-        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, self. controlInputNominalReal, ControlInput(), nullDisturbance)
+        self.odeEngineFF = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, ODEEnv(), self.envT, ControlInput(), self. controlInputNominalReal, nullDisturbance)
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
@@ -60,7 +60,7 @@ class KDisturbanceObserver:
         result = self.xinc()
 
         # feedback estimated disturbance to actual system for closed loop system
-        self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
+        # self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
     
         # debug
         # print(self.odeEngineFF.getStates().getX())
