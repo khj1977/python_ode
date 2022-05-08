@@ -36,6 +36,7 @@ class TestODEBatch(batch.Batch):
     self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, envT, f, startX, startXDot, delta, rateLambda)
 
     self.resultT = []
+
     self.resultXDot = []
     self.resultX = []
 
@@ -100,6 +101,20 @@ class TestODEBatch(batch.Batch):
       self.disturbanceResultXDot.append(disturbanceVals[2])
     # end of debug
 
+  def saveToFileTime(self, tMax, xMin, xMax):
+    plt.ylim(xMin, xMax)
+    plt.xlim(0, tMax)
+    plt.plot(self.resultT, self.resultX, label="actual system")
+    plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    # plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    
+    # 凡例の表示
+    plt.legend()
+
+    # プロット表示(設定の反映)
+    plt.show()
+
   def saveToFile(self, xMin, xMax, yMin, yMax):
     i = 0
     for t in self.resultT:
@@ -137,8 +152,8 @@ class TestODEBatch(batch.Batch):
 # f = lambda t, x, xDot: - 6.0 * x - 5.0 * xDot - 10.0 * t * x
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
-# f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
-f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
+f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.001 * xDot
@@ -164,9 +179,9 @@ controlInput.setCoef(coefs)
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 4.0 * math.sin(t)
-# disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
+disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 # disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
-disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
 #disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
 # disturbanceF = lambda t, x, xDot: 6.0 * math.sin(t)
@@ -185,6 +200,8 @@ ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0
 ode.solve()
 ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
-# ode.saveToFile(-2.5, 2.5, -2.5, 2.5)
+# ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
+
+# ode.saveToFileTime(100.0, -10.0, 10.0)

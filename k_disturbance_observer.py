@@ -45,7 +45,7 @@ class KDisturbanceObserver:
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
 
         coefs = ode_coefs.ODECoefs()
-        coefs.setCoefs([-10.0, -15.0])
+        coefs.setCoefs([-100.0, -30.0])
         # coefs.setCoefs([10.0, 15.0])
         # coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
@@ -58,8 +58,9 @@ class KDisturbanceObserver:
         self.applyControlInput(self.controlInput)
         result = self.xinc()
 
-        # self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
-
+        # feedback estimated disturbance to actual system for closed loop system
+        self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
+    
         # debug
         # print(self.odeEngineFF.getStates().getX())
         # print(self.modifiedSignalDynamics.getX())
