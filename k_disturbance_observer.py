@@ -68,7 +68,7 @@ class KDisturbanceObserver:
         result = self.xinc()
 
         # feedback estimated disturbance to actual system for closed loop system
-        self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
+        # self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
     
         # debug
         # print(self.odeEngineFF.getStates().getX())
@@ -94,6 +94,9 @@ class KDisturbanceObserver:
 
     def getEstimatedDisturbanceDynamics(self):
         return self.controlInput
+
+    def getFFSignal(self):
+        return self.odeEngineFF.getStates()
 
     # debug
     # implement the following method

@@ -116,9 +116,9 @@ class TestODEBatch(batch.Batch):
     plt.ylim(xMin, xMax)
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
-    plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    #plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    #plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    #plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
 
     # 凡例の表示
@@ -216,5 +216,5 @@ ode.solve()
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-# ode.saveToFileTime(100.0, -100.0, 100.0)
-ode.saveToFileTime(100.0, -15.0, 15.0)
+ode.saveToFileTime(100.0, -100.0, 100.0)
+# ode.saveToFileTime(100.0, -15.0, 15.0)
