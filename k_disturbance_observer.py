@@ -41,6 +41,10 @@ class KDisturbanceObserver:
         # debug
         # really self.states?
         # end of debug
+
+        # debug
+        # the following def control may cause bug.
+        # end of debug
         self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInputNominalReal, self.controlInput, nullDisturbance)
 
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
