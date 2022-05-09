@@ -87,7 +87,10 @@ class TestODEBatch(batch.Batch):
       # debug
       # self.disturbance.calcDynamics()
       # end of debug
+      # debug
+      # The following is really required?
       self.disturbance.calcDisturbanceDot()
+      # end of debug
 
       self.resultT.append(result[0])
       self.resultX.append(result[1])
@@ -104,7 +107,7 @@ class TestODEBatch(batch.Batch):
 
       # debug
       # is it really getX1()? There may be a bug
-      self.errorResultX.append(errorDynamics.getX1())
+      self.errorResultX.append(errorDynamics.getX())
       self.errorResultXDot.append(errorDynamics.getX2())
       # end of debug
 
@@ -123,9 +126,10 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.resultT, self.resultX, label="actual system")
     plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
     plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
-    # plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
-    # plt.plot(self.resultT, self.ffResultX, label="ff signal")
+    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
+    plt.plot(self.resultT, self.ffResultX, label="ff signal")
+    plt.plot(self.resultT, self.errorResultX, label="error")
 
     # 凡例の表示
     plt.legend()
@@ -202,6 +206,7 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 
 disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
+
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
 #disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
