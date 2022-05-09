@@ -58,9 +58,9 @@ class KDisturbanceObserver:
         # debug
         # Controller for disturbance observer which is estimated disturbance
         coefs = ode_coefs.ODECoefs()
-        # coefs.setCoefs([100.0, 30.0])
-        # coefs.setCoefs([10.0, 30.0])
-        coefs.setCoefs([6.0, 50.0])
+        coefs.setCoefs([100.0, 30.0])
+        # coefs.setCoefs([10.0, 50.0])
+        # coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
@@ -68,12 +68,19 @@ class KDisturbanceObserver:
 
 
     def inc(self):
+        # debug
+        # The following block could go to xinc().
+        # print(self.errorDynamics.getErr())
+        self.modifiedSignalDynamics.calcErr()
+        self.errorDynamics.calcErr()
+        # end of debug
+
         self.calcControlInput()
         self.applyControlInput(self.controlInput)
         result = self.xinc()
 
         # feedback estimated disturbance to actual system for closed loop system
-        # self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
+        self.controlInputReal.setControlInput(self.controlInput.getControlInput())
 
         return result
 
@@ -82,11 +89,10 @@ class KDisturbanceObserver:
         # control input to applied to observer
         # odeEngineRelal is inc()ed by another method or scope.
         self.odeEngineFF.inc()
-        self.modifiedSignalDynamics.calcErr()
-        self.modifiedSignalDynamics.calcErrDot()
-        self.errorDynamics.calcErr()
-        self.errorDynamics.calcErrDot()
         result = self.disturbanceObserverEngine.inc()
+
+        self.modifiedSignalDynamics.calcErrDot()
+        self.errorDynamics.calcErrDot()
         # end of debug
 
         return result
