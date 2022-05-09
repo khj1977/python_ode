@@ -55,13 +55,16 @@ class KDisturbanceObserver:
 
         self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT, FALSE)
 
+        # debug
+        # Controller for disturbance observer which is estimated disturbance
         coefs = ode_coefs.ODECoefs()
         # coefs.setCoefs([100.0, 30.0])
-        coefs.setCoefs([10.0, 30.0])
-        # coefs.setCoefs([6.0, 5.0])
+        # coefs.setCoefs([10.0, 30.0])
+        coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
+        # end of debug
 
 
     def inc(self):
@@ -71,13 +74,6 @@ class KDisturbanceObserver:
 
         # feedback estimated disturbance to actual system for closed loop system
         # self.controlInputReal.setControlInput(-1.0 * self.controlInput.getControlInput())
-    
-        # debug
-        # print(self.odeEngineFF.getStates().getX())
-        # print(self.modifiedSignalDynamics.getX())
-        # print(self.states.getX())
-        # print(self.errorDynamics.getX())
-        # end of debug
 
         return result
 
@@ -86,6 +82,10 @@ class KDisturbanceObserver:
         # control input to applied to observer
         # odeEngineRelal is inc()ed by another method or scope.
         self.odeEngineFF.inc()
+        self.modifiedSignalDynamics.calcErr()
+        self.modifiedSignalDynamics.calcErrDot()
+        self.errorDynamics.calcErr()
+        self.errorDynamics.calcErrDot()
         result = self.disturbanceObserverEngine.inc()
         # end of debug
 
@@ -118,10 +118,6 @@ class KDisturbanceObserver:
         # return self
         # self.controlInput.getStates().calcErr()
         # self.controlInput.getStates().calcErrDot()
-        self.modifiedSignalDynamics.calcErr()
-        self.modifiedSignalDynamics.calcErrDot()
-        self.errorDynamics.calcErr()
-        self.errorDynamics.calcErrDot()
 
         self.controlInput.calcControlInput()
         # end of debug
