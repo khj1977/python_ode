@@ -111,8 +111,8 @@ class TestODEBatch(batch.Batch):
       self.errorResultXDot.append(errorDynamics.getX2())
       # end of debug
 
-      self.controlResultX.append(self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInput())
-      self.controlResultXDot.append(self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInputDot())
+      self.controlResultX.append(-1.0 * self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInput())
+      self.controlResultXDot.append(-1.0 * self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInputDot())
 
       # add disturbance array to obtain dynamics of disturbance to list
       disturbanceVals = self.disturbance.getStates()
@@ -124,10 +124,10 @@ class TestODEBatch(batch.Batch):
     plt.ylim(xMin, xMax)
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
-    # plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
     plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
     plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
-    plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
+    #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
     # plt.plot(self.resultT, self.errorResultX, label="error")
 
@@ -203,9 +203,9 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 4.0 * math.sin(t)
 
 # nonlinear void disturbance
-# disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
+disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 
-disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
+# disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
@@ -231,5 +231,6 @@ ode.solve()
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
-# ode.saveToFileTime(100.0, -15.0, 15.0)
-ode.saveToFileTime(100.0, -3.0, 3.0)
+ode.saveToFileTime(100.0, -15.0, 15.0)
+# ode.saveToFileTime(100.0, -3.0, 3.0)
+# ode.saveToFileTime(100.0, -0.3, 0.3)
