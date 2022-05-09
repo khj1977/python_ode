@@ -1,3 +1,4 @@
+from pickle import FALSE, TRUE
 from posixpath import supports_unicode_filenames
 from error_dynamics import ErrorDynamics
 from ode_control_input import ControlInput
@@ -33,7 +34,8 @@ class KDisturbanceObserver:
         
         #  def __init__(self, xEnv1, xEnv2, envT):
         # r_bDot = Ar_b + Bp
-        self.modifiedSignalDynamics = ErrorDynamics(self.odeEngineReal.getStates(), self.odeEngineFF.getStates(), self.envT)
+        # self.modifiedSignalDynamics = ErrorDynamics(self.odeEngineReal.getStates(), self.odeEngineFF.getStates(), self.envT)
+        self.modifiedSignalDynamics = ErrorDynamics(self.odeEngineReal.getStates(), self.odeEngineFF.getStates(), self.envT, FALSE)
         
         # disturbance observer follows modified reference signal.
         # u = K(t) * e(t) where e(t)  = x - r_b where r_b = self.modifiedSignalDynamics
@@ -51,7 +53,7 @@ class KDisturbanceObserver:
         # end of debug
         self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInputNominalReal, self.controlInput, nullDisturbance)
 
-        self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT)
+        self.errorDynamics = ErrorDynamics(self.disturbanceObserverEngine.getStates(),  self.modifiedSignalDynamics, self.envT, FALSE)
 
         coefs = ode_coefs.ODECoefs()
         coefs.setCoefs([-100.0, -30.0])
@@ -114,8 +116,12 @@ class KDisturbanceObserver:
         # end of debug
 
         # return self
-        self.controlInput.getStates().calcErr()
-        self.controlInput.getStates().calcErrDot()
+        # self.controlInput.getStates().calcErr()
+        # self.controlInput.getStates().calcErrDot()
+        self.modifiedSignalDynamics.calcErr()
+        self.modifiedSignalDynamics.calcErrDot()
+        self.errorDynamics.calcErr()
+        self.errorDynamics.calcErrDot()
         self.controlInput.calcControlInput()
         # end of debug
 

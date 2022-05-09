@@ -1,3 +1,4 @@
+from pickle import FALSE
 from tracemalloc import start
 from k_disturbance_observer import KDisturbanceObserver
 from ode_coefs import ODECoefs
@@ -120,11 +121,11 @@ class TestODEBatch(batch.Batch):
     plt.ylim(xMin, xMax)
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
-    #plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    #plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    #plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
-    plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
-    plt.plot(self.resultT, self.ffResultX, label="ff signal")
+    plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    # plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
+    # plt.plot(self.resultT, self.ffResultX, label="ff signal")
 
     # 凡例の表示
     plt.legend()
@@ -196,8 +197,11 @@ controlInput.setCoef(coefs)
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # disturbanceF = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 4.0 * math.sin(t)
-disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
-# disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
+
+# nonlinear void disturbance
+# disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
+
+disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
 #disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
@@ -206,7 +210,7 @@ disturbance = ode_disturbance.Disturbance(disturbanceF, env, envT)
 # end of debug
 
 # def __init__(self, xEnv1, xEnv2):
-errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT)
+errorDynamics = error_dynamics.ErrorDynamics(env, envObserver, envT, FALSE)
 controlInput.setState(errorDynamics)
 
 # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
@@ -221,5 +225,6 @@ ode.solve()
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-ode.saveToFileTime(100.0, -100.0, 100.0)
+# ode.saveToFileTime(100.0, -100.0, 100.0)
 # ode.saveToFileTime(100.0, -15.0, 15.0)
+ode.saveToFileTime(100.0, -3.0, 3.0)
