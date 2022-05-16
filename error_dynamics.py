@@ -70,7 +70,10 @@ class ErrorDynamics:
 
     def getTrans2Norm(self, lambdas):
         eTrans = self.getTransformed(lambdas)
+        # debug
+        # is it norm^2?
         norm = np.dot(eTrans, eTrans)
+        # end of debug
         return norm
 
     def get2Norm2(self):

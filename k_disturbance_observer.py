@@ -61,9 +61,9 @@ class KDisturbanceObserver:
         # debug
         # Controller for disturbance observer which is estimated disturbance
         coefs = ode_coefs.ODECoefs()
-        # coefs.setCoefs([1000.0, 3000.0])
+        coefs.setCoefs([1000.0, 3000.0])
         # coefs.setCoefs([10.0, 50.0])
-        coefs.setCoefs([6.0, 5.0])
+        # coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
