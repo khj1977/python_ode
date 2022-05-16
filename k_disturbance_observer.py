@@ -128,14 +128,26 @@ class KDisturbanceObserver:
             lambdaDot = 0.0
         else:
             lambdaDot = self.rateLambda
-            # lambdaDot = 0.001
+            # lambdaDot = 0.01
         # debug
         # calc gain with lanbdaDot
         # self.kappa = 0.2
+
+        # a21 = -6.0
+        # a22 = -5.0
+        # l1 = 10.0
+        # l2 = 20.0
+        # k1 = -1.0 * (l1 * l2) - a21
+        # k2 = -1.0 * (l1 + l2) - a22
+        # a = np.array([[0., 1.], [a21 + k1, a22 + k2]])
+        # w, v = la.eig(a)
+        # print(w)
+
         lambda1 = self.lambdas[0] + lambdaDot
-        lambda2 = lambda1 * self.kappa
-        k1 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[0]
-        k2 = -1.0 * lambda1 * lambda2 - self.nominalCoefs[1]
+        # lambda2 = lambda1 * self.kappa
+        lambda2 = lambda1 * 0.2
+        k1 = -1.0 * (lambda1 * lambda2) - self.nominalCoefs[0]
+        k2 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[1]
 
         self.lambdas[0] = lambda1
         self.lambdas[1] = lambda2
@@ -146,10 +158,10 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
-        #a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
-        #w, v = la.eig(a)
+        # a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        # w, v = la.eig(a)
         # print(gain)
-        #print(w)
+        # print(w)
         # end of debug
 
         # self.controlInput.setCoef(coef)
