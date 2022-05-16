@@ -17,7 +17,7 @@ import math
 
 class TestODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance):
+  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
@@ -39,8 +39,11 @@ class TestODEBatch(batch.Batch):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
     self.controlInput = controlInput
 
+    # debug
+    # The last argument may be changed.
     # def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
-    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda)
+    self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas)
+    # end of debug
 
     self.resultT = []
 
@@ -175,6 +178,8 @@ class TestODEBatch(batch.Batch):
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# init lambdas are eigen vals of nominal system.
+initlambdas = [-2, -3]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -222,7 +227,7 @@ controlInput.setState(errorDynamics)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
 env.setX(10.0)
 env.setXDot(5.0)
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance)
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas)
 ode.solve()
 # ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)

@@ -68,8 +68,8 @@ class ErrorDynamics:
 
         return eTrans
 
-    def getTrans2Norm(self):
-        eTrans = self.getTransformed()
+    def getTrans2Norm(self, lambdas):
+        eTrans = self.getTransformed(lambdas)
         norm = np.dot(eTrans, eTrans)
         return norm
 
