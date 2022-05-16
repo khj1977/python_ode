@@ -8,6 +8,8 @@ import ode_euler
 import ode_coefs
 import ode_control_input
 import math
+from numpy import linalg as la
+import numpy as np
 
 class KDisturbanceObserver:
     def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa):
@@ -125,6 +127,7 @@ class KDisturbanceObserver:
             lambdaDot = self.rateLambda
         # debug
         # calc gain with lanbdaDot
+        # self.kappa = 0.2
         lambda1 = self.lambdas[0] - lambdaDot
         lambda2 = lambda1 * self.kappa
         k1 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[0]
@@ -133,8 +136,17 @@ class KDisturbanceObserver:
         self.lambdas[0] = lambda1
         self.lambdas[1] = lambda2
 
-        # coef = self.controlInput.getCoef()
-        # coef.setCoefs([k1, k2])
+        coef = self.controlInput.getCoef()
+        gain = [k1, k2]
+        coef.setCoefs(gain)
+
+        # debug
+        a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        w, v = la.eig(a)
+        print(gain)
+        print(w)
+        # end of debug
+
         # self.controlInput.setCoef(coef)
         # end of debug
 
