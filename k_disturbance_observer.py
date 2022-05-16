@@ -158,10 +158,10 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
-        # a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
-        # w, v = la.eig(a)
+        a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        w, v = la.eig(a)
         # print(gain)
-        # print(w)
+        print(w)
         # end of debug
 
         # self.controlInput.setCoef(coef)
