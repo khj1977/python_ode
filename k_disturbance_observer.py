@@ -111,6 +111,9 @@ class KDisturbanceObserver:
     def getFFSignal(self):
         return self.odeEngineFF.getStates()
 
+    def getErrorDynamics(self):
+        return self.errorDynamics
+
     # debug
     # implement the following method
     def calcControlInput(self):
@@ -143,10 +146,10 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
-        a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
-        w, v = la.eig(a)
+        #a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        #w, v = la.eig(a)
         # print(gain)
-        print(w)
+        #print(w)
         # end of debug
 
         # self.controlInput.setCoef(coef)

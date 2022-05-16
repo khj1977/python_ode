@@ -76,7 +76,8 @@ class TestODEBatch(batch.Batch):
 
     # debug
     # implement odeEngine.inc() and use loop for several ode engine paralelly.
-    errorDynamics = self.observerEngine.getControlInput().getStates()
+    # errorDynamics = self.observerEngine.getControlInput().getStates()
+    errorDynamics = self.disturbanceObserver.getErrorDynamics()
     modifiedSignal = self.disturbanceObserver.getModifiedReference()
     ff = self.disturbanceObserver.getFFSignal()
     for t in self.envT.startClock():
@@ -134,8 +135,8 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
     plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
     plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
-    #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
-    #plt.plot(self.resultT, self.ffResultX, label="ff signal")
+    plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
+    plt.plot(self.resultT, self.ffResultX, label="ff signal")
     # plt.plot(self.resultT, self.errorResultX, label="error")
 
     # 凡例の表示

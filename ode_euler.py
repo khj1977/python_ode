@@ -71,8 +71,7 @@ class ODEOneDimEulerMethod:
     # Hack the following to use multiple number of f()s to handle observer.
     # make t, x, xdot env to enclose to handle multple phase env namely: PhaseEnv
     # ddx = self.diffEQ(t, x, xDot) + self.controlInput.getControlInput() + self.disturbance.calcDynamics()
-    ddx = self.diffEQ(t, x, xDot) 
-    ddx = ddx + self.controlInput.getControlInput() + self.controlInputNominal.getControlInput() + self.disturbance.calcDynamics()
+    ddx = self.diffEQ(t, x, xDot) + self.controlInput.getControlInput() + self.controlInputNominal.getControlInput() + self.disturbance.calcDynamics()
     # ddx = self.diffEQ(t, x, xDot)
     # end of ODE
 
