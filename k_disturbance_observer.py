@@ -115,7 +115,7 @@ class KDisturbanceObserver:
         # debug
         # make this algo adaptive.
         # end of debug
-        lyapunovValue = self.errorDynamics.getTrans2Norm2(self.lambdas)
+        lyapunovValue = self.errorDynamics.getTrans2Norm(self.lambdas)
         if lyapunovValue < self.delta:
             lambdaDot = 0.0
         else:
