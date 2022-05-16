@@ -105,6 +105,10 @@ class TestODEBatch(batch.Batch):
       self.disturbanceObserverResultX.append(resultKDO[1])
       self.disturbanceObserverResultXDot.append(resultKDO[2])
 
+      # debug
+      # print(resultKDO[1])
+      # end of debug
+
       self.modifiedReferemceResultX.append(modifiedSignal.getX())
       self.ffResultX.append(ff.getX())
 
@@ -236,7 +240,7 @@ ode.solve()
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-# ode.saveToFileTime(100.0, -100.0, 100.0)
-ode.saveToFileTime(100.0, -15.0, 15.0)
+ode.saveToFileTime(100.0, -100.0, 100.0)
+# ode.saveToFileTime(100.0, -15.0, 15.0)
 # ode.saveToFileTime(100.0, -3.0, 3.0)
 # ode.saveToFileTime(100.0, -0.3, 0.3)

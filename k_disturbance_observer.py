@@ -61,9 +61,9 @@ class KDisturbanceObserver:
         # debug
         # Controller for disturbance observer which is estimated disturbance
         coefs = ode_coefs.ODECoefs()
-        coefs.setCoefs([1000.0, 3000.0])
+        # coefs.setCoefs([1000.0, 3000.0])
         # coefs.setCoefs([10.0, 50.0])
-        # coefs.setCoefs([6.0, 5.0])
+        coefs.setCoefs([6.0, 5.0])
         self.controlInput.setCoef(coefs)
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
@@ -83,7 +83,7 @@ class KDisturbanceObserver:
         result = self.xinc()
 
         # feedback estimated disturbance to actual system for closed loop system
-        self.controlInputReal.setControlInput(self.controlInput.getControlInput())
+        # self.controlInputReal.setControlInput(self.controlInput.getControlInput())
 
         return result
 
@@ -116,13 +116,16 @@ class KDisturbanceObserver:
         # make this algo adaptive.
         # end of debug
         lyapunovValue = self.errorDynamics.getTrans2Norm(self.lambdas)
+        # debug
+        # print(lyapunovValue)
+        # end of debug
         if lyapunovValue < self.delta:
             lambdaDot = 0.0
         else:
             lambdaDot = self.rateLambda
         # debug
         # calc gain with lanbdaDot
-        lambda1 = self.lambdas[0] + lambdaDot
+        lambda1 = self.lambdas[0] - lambdaDot
         lambda2 = lambda1 * self.kappa
         k1 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[0]
         k2 = -1.0 * lambda1 * lambda2 - self.nominalCoefs[1]
@@ -130,9 +133,9 @@ class KDisturbanceObserver:
         self.lambdas[0] = lambda1
         self.lambdas[1] = lambda2
 
-        coef = self.controlInput.getCoef()
-        coef.setCoefs([k1, k2])
-        self.controlInput.setCoef(coef)
+        # coef = self.controlInput.getCoef()
+        # coef.setCoefs([k1, k2])
+        # self.controlInput.setCoef(coef)
         # end of debug
 
         # return self
