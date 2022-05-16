@@ -28,6 +28,9 @@ class ControlInput:
         self.coefs = coefs
         return self
 
+    def getCoef(self):
+        return self.coefs
+
     def setControlInput(self, controlInput):
         self.u = controlInput
 

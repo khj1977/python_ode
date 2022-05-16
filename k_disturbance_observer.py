@@ -130,7 +130,9 @@ class KDisturbanceObserver:
         self.lambdas[0] = lambda1
         self.lambdas[1] = lambda2
 
-        self.controlInput.setCoef([k1, k2])
+        coef = self.controlInput.getCoef()
+        coef.setCoefs([k1, k2])
+        self.controlInput.setCoef(coef)
         # end of debug
 
         # return self
