@@ -1,4 +1,6 @@
 import ode_env
+import numpy as np
+from numpy.linalg import inv
 
 class ErrorDynamics:
 
@@ -57,6 +59,19 @@ class ErrorDynamics:
 
     def getErrDot(self):
         return self.errDot
+
+    def getTransformed(self, lambdas):
+        t = np.array([[1., 1.], [lambdas[0], lambdas[1]]])
+        tInv = inv(t)
+        e = np.array([self.err, self.errDot])
+        eTrans = np.matmul(tInv, e)
+
+        return eTrans
+
+    def getTrans2Norm(self):
+        eTrans = self.getTransformed()
+        norm = np.dot(eTrans, eTrans)
+        return norm
 
     def get2Norm2(self):
         self.calcErr()
