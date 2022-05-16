@@ -36,8 +36,8 @@ class ErrorDynamics:
        return self
 
     def yieldStates(self):
-        yield self.getErrDot()
         yield self.getErr()
+        yield self.getErrDot()
 
     def getX(self):
         return self.err

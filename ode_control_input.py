@@ -43,9 +43,17 @@ class ControlInput:
         # determine linear control input based on coefs and state
         self.prevU = self.u
         u = 0.0
+        states = []
+        coefs = []
         for x in self.env.yieldStates():
-            for a in self.coefs.yieldCoefs():
-                u = u + a * x
+            states.append(x)
+        for a in self.coefs.yieldCoefs():
+            # u = u + a * x
+            coefs.append(a)
+
+        u = coefs[0] * states[0] + coefs[1] * states[1]
+
+        # print(u)
 
         self.setControlInput(u)
         return self

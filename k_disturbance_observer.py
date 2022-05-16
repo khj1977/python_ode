@@ -63,9 +63,9 @@ class KDisturbanceObserver:
         # debug
         # Controller for disturbance observer which is estimated disturbance
         coefs = ode_coefs.ODECoefs()
-        coefs.setCoefs([1000.0, 3000.0])
+        # coefs.setCoefs([1000.0, 3000.0])
         # coefs.setCoefs([10.0, 50.0])
-        # coefs.setCoefs([6.0, 5.0])
+        coefs.setCoefs([0.0, 0.0])
         self.controlInput.setCoef(coefs)
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
@@ -82,7 +82,12 @@ class KDisturbanceObserver:
 
         self.calcControlInput()
         self.applyControlInput(self.controlInput)
-        result = self.xinc()
+        
+        self.odeEngineFF.inc()
+        result = self.disturbanceObserverEngine.inc()
+
+        self.modifiedSignalDynamics.calcErrDot()
+        self.errorDynamics.calcErrDot()
 
         # feedback estimated disturbance to actual system for closed loop system
         # self.controlInputReal.setControlInput(self.controlInput.getControlInput())
@@ -95,9 +100,6 @@ class KDisturbanceObserver:
         # odeEngineRelal is inc()ed by another method or scope.
         self.odeEngineFF.inc()
         result = self.disturbanceObserverEngine.inc()
-
-        self.modifiedSignalDynamics.calcErrDot()
-        self.errorDynamics.calcErrDot()
         # end of debug
 
         return result
@@ -122,13 +124,13 @@ class KDisturbanceObserver:
         # end of debug
         lyapunovValue = self.errorDynamics.getTrans2Norm(self.lambdas)
         # debug
-        print(lyapunovValue)
+        # print(lyapunovValue)
         # end of debug
         if lyapunovValue < self.delta:
             lambdaDot = 0.0
         else:
-            lambdaDot = self.rateLambda
-            # lambdaDot = 0.01
+            # lambdaDot = self.rateLambda
+            lambdaDot = 0.001
         # debug
         # calc gain with lanbdaDot
         # self.kappa = 0.2
@@ -142,9 +144,16 @@ class KDisturbanceObserver:
         # a = np.array([[0., 1.], [a21 + k1, a22 + k2]])
         # w, v = la.eig(a)
         # print(w)
-
+        self.kappa = 0.05
         lambda1 = self.lambdas[0] + lambdaDot
         lambda2 = lambda1 * self.kappa
+
+        # debug
+        #if lambda1 > 5.0:
+        #    self.controlInput.calcControlInput()
+        #    return
+        # end of debug
+
         # lambda2 = lambda1 * 0.2
         k1 = -1.0 * (lambda1 * lambda2) - self.nominalCoefs[0]
         k2 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[1]
@@ -154,14 +163,13 @@ class KDisturbanceObserver:
 
         coef = self.controlInput.getCoef()
         gain = [k1, k2]
-        # gain = [60.0, 50.0]
         coef.setCoefs(gain)
 
         # debug
-        # a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
-        # w, v = la.eig(a)
+        a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        w, v = la.eig(a)
         # print(gain)
-        # print(w)
+        print(w)
         # end of debug
 
         # self.controlInput.setCoef(coef)
@@ -172,6 +180,8 @@ class KDisturbanceObserver:
         # self.controlInput.getStates().calcErrDot()
 
         self.controlInput.calcControlInput()
+
+        # self.controlInput.setControlInput(0.0)
         # end of debug
 
     # debug
