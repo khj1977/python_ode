@@ -197,7 +197,8 @@ nominalCoefs = [-2.0, -1.0]
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
 envObserver = ode_env.ODEEnv()
-envT = ode_time.ODETime(0, 100.0, 0.01)
+endT = 100.0
+envT = ode_time.ODETime(0, endT, 0.01)
 
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
@@ -234,7 +235,8 @@ controlInput.setState(errorDynamics)
 env.setX(10.0)
 env.setXDot(5.0)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
+delta = 0.01
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
 ode.solve()
 # ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
@@ -243,6 +245,6 @@ ode.solve()
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
-# ode.saveToFileTime(100.0, -15.0, 15.0)
+# ode.saveToFileTime(endT, -15.0, 15.0)
 ode.saveToFileTime(100.0, -3.0, 3.0)
 # ode.saveToFileTime(100.0, -0.3, 0.3)
