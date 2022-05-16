@@ -10,7 +10,7 @@ import ode_control_input
 import math
 
 class KDisturbanceObserver:
-    def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas):
+    def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa):
         self.odeEngineReal = odeEngineReal
         self.envT = envT
         self.states = ODEEnv()
@@ -23,6 +23,8 @@ class KDisturbanceObserver:
         # control input for observer not actual system or modified refernece signal.
         self.controlInput = ControlInput()
         self.lambdas = initLambdas
+        self.kappa = kappa
+        self.nominalCoefs = nominalCoefs
 
         # debug
         # There may be bug around the following since the disturbance is not canceled 
@@ -120,6 +122,15 @@ class KDisturbanceObserver:
             lambdaDot = self.rateLambda
         # debug
         # calc gain with lanbdaDot
+        lambda1 = self.lambdas[0] + lambdaDot
+        lambda2 = lambda1 * self.kappa
+        k1 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[0]
+        k2 = -1.0 * lambda1 * lambda2 - self.nominalCoefs[1]
+
+        self.lambdas[0] = lambda1
+        self.lambdas[1] = lambda2
+
+        self.controlInput.setCoef([k1, k2])
         # end of debug
 
         # return self
