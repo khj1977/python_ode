@@ -234,7 +234,7 @@ controlInput.setState(errorDynamics)
 env.setX(10.0)
 env.setXDot(5.0)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.6)
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
 ode.solve()
 # ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)

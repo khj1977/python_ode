@@ -122,7 +122,7 @@ class KDisturbanceObserver:
         # end of debug
         lyapunovValue = self.errorDynamics.getTrans2Norm(self.lambdas)
         # debug
-        # print(lyapunovValue)
+        print(lyapunovValue)
         # end of debug
         if lyapunovValue < self.delta:
             lambdaDot = 0.0
@@ -144,8 +144,8 @@ class KDisturbanceObserver:
         # print(w)
 
         lambda1 = self.lambdas[0] + lambdaDot
-        # lambda2 = lambda1 * self.kappa
-        lambda2 = lambda1 * 0.2
+        lambda2 = lambda1 * self.kappa
+        # lambda2 = lambda1 * 0.2
         k1 = -1.0 * (lambda1 * lambda2) - self.nominalCoefs[0]
         k2 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[1]
 
@@ -158,10 +158,10 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
-        a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
-        w, v = la.eig(a)
+        # a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
+        # w, v = la.eig(a)
         # print(gain)
-        print(w)
+        # print(w)
         # end of debug
 
         # self.controlInput.setCoef(coef)
