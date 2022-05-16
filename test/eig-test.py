@@ -1,12 +1,14 @@
 from numpy import linalg as la
 import numpy as np
 
-#a21 = -6.0
-#a22 = -5.0
-a21 = -2.0
-a22 = -1.0
-k1 = -1.0 * (10.0 + 20.0) - a21
-k2 = -1.0 * (10.0 * 20.0) - a22
+a21 = -6.0
+a22 = -5.0
+#a21 = -2.0
+#a22 = -1.0
+l1 = 10.0
+l2 = 20.0
+k2 = -1.0 * (l1 + l2) - a22
+k1 = -1.0 * (l1 * l2) - a21
 a = np.array([[0., 1.], [a21 + k1, a22 + k2]])
 w, v = la.eig(a)
 print(w)
