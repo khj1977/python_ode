@@ -183,7 +183,7 @@ class TestODEBatch(batch.Batch):
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # init lambdas are eigen vals of nominal system.
-initLambdas = [-2.0, -3.0]
+initLambdas = [2.0, 3.0]
 nominalCoefs = [-2.0, -1.0]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
@@ -232,7 +232,8 @@ controlInput.setState(errorDynamics)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, controlInput, disturbance):
 env.setX(10.0)
 env.setXDot(5.0)
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 1.2)
+# def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
+ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, 0.001, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.6)
 ode.solve()
 # ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)

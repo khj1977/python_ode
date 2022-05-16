@@ -128,7 +128,7 @@ class KDisturbanceObserver:
         # debug
         # calc gain with lanbdaDot
         # self.kappa = 0.2
-        lambda1 = self.lambdas[0] - lambdaDot
+        lambda1 = self.lambdas[0] + lambdaDot
         lambda2 = lambda1 * self.kappa
         k1 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[0]
         k2 = -1.0 * lambda1 * lambda2 - self.nominalCoefs[1]
@@ -138,12 +138,13 @@ class KDisturbanceObserver:
 
         coef = self.controlInput.getCoef()
         gain = [k1, k2]
+        # gain = [60.0, 50.0]
         coef.setCoefs(gain)
 
         # debug
         a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
         w, v = la.eig(a)
-        print(gain)
+        # print(gain)
         print(w)
         # end of debug
 
