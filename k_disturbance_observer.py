@@ -72,6 +72,9 @@ class KDisturbanceObserver:
         self.controlInput.setState(self.errorDynamics)
         # end of debug
 
+        # smoothing function of lambda dot
+        self.f1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 3.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
+        self.f2 = lambda t, tau, omega, lambdaDot: 0.0
 
     def inc(self):
         # debug
