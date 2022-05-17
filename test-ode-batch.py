@@ -71,6 +71,8 @@ class TestODEBatch(batch.Batch):
     self.disturbanceResultXDot = []
     self.disturbanceResultX = []
 
+    self.estimationError = []
+
   def solve(self):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
 
@@ -126,6 +128,10 @@ class TestODEBatch(batch.Batch):
       disturbanceVals = self.disturbance.getStates()
       self.disturbanceResultX.append(disturbanceVals[1])
       self.disturbanceResultXDot.append(disturbanceVals[2])
+
+      estimationError = -1.0 * self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInput() - disturbanceVals[1]
+      # print(estimationError)
+      self.estimationError.append(estimationError)
     # end of debug
 
   def saveToFileTime(self, tMax, xMin, xMax):
@@ -138,6 +144,7 @@ class TestODEBatch(batch.Batch):
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
     #plt.plot(self.resultT, self.errorResultX, label="error")
+    plt.plot(self.resultT, self.estimationError, label="estimation error")
 
     # 凡例の表示
     plt.legend()
@@ -246,5 +253,5 @@ ode.solve()
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 # ode.saveToFileTime(endT, -15.0, 15.0)
-ode.saveToFileTime(endT, -1.3, 1.3)
+ode.saveToFileTime(endT, -0.2, 0.2)
 # ode.saveToFileTime(100.0, -0.3, 0.3)
