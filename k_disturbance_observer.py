@@ -76,6 +76,9 @@ class KDisturbanceObserver:
         self.f1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 3.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
         self.f2 = lambda t, tau, omega, lambdaDot: 0.0
 
+        self.g1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 1.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
+        self.g2 = lambda t, tau, omega, lambdaDot: -1.0 * lambdaDot
+
     def inc(self):
         # debug
         # The following block could go to xinc().
