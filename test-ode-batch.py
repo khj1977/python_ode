@@ -138,12 +138,12 @@ class TestODEBatch(batch.Batch):
     plt.ylim(xMin, xMax)
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
-    #plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    ## plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    ## plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    ## plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
-    #plt.plot(self.resultT, self.errorResultX, label="error")
+    plt.plot(self.resultT, self.errorResultX, label="error")
     ## plt.plot(self.resultT, self.estimationError, label="estimation error")
 
     # 凡例の表示
@@ -248,12 +248,12 @@ ode.solve()
 
 # plot
 # ode.saveToFile(-200.0, 200.0, -200.0, 200.0)
-ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
+# ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
-# ode.saveToFileTime(endT, -15.0, 15.0)
+## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-## ode.saveToFileTime(100.0, -2.0, 2.0)
+ode.saveToFileTime(100.0, -2.0, 2.0)
