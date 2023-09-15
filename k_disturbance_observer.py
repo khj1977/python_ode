@@ -145,7 +145,8 @@ class KDisturbanceObserver:
             # lambdaDot = self.rateLambda
             lambdaDot = 0.003
 
-        print(self.lyapunovValue)
+        # print(self.lyapunovValue)
+        
         # debug
         # calc gain with lanbdaDot
         # self.kappa = 0.2
