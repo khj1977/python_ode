@@ -129,9 +129,12 @@ class TestODEBatch(batch.Batch):
       self.disturbanceResultX.append(disturbanceVals[1])
       self.disturbanceResultXDot.append(disturbanceVals[2])
 
+      # debug
+      # it should be norm?
       estimationError = -1.0 * self.disturbanceObserver.getEstimatedDisturbanceDynamics().getControlInput() - disturbanceVals[1]
       # print(estimationError)
       self.estimationError.append(estimationError)
+      # end of debug
     # end of debug
 
   def saveToFileTime(self, tMax, xMin, xMax):
