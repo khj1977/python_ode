@@ -245,7 +245,9 @@ env.setXDot(5.0)
 delta = 0.00001
 ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
 ode.solve()
-# ode.saveToFile(-70.0, 70.0, -70.0, 70.0)
+
+# plot
+# ode.saveToFile(-200.0, 200.0, -200.0, 200.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
@@ -253,5 +255,5 @@ ode.solve()
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 # ode.saveToFileTime(endT, -15.0, 15.0)
-ode.saveToFileTime(endT, -0.2, 0.2)
-# ode.saveToFileTime(100.0, -0.3, 0.3)
+# ode.saveToFileTime(endT, -0.2, 0.2)
+ode.saveToFileTime(100.0, -0.3, 0.3)
