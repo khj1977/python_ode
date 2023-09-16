@@ -145,7 +145,7 @@ class KDisturbanceObserver:
             lambdaDot = 0.0
         else:
             # lambdaDot = self.rateLambda
-            lambdaDot = 0.003
+            lambdaDot = 0.005
 
         # print(self.lyapunovValue)
         
@@ -187,20 +187,27 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
+        print(k1)
+        # end of debug
+
+        # debug
         #a = np.array([[0., 1.], [self.nominalCoefs[0] + k1, self.nominalCoefs[1] + k2]])
         #w, v = la.eig(a)
         # print(gain)
         #print(w)
         # end of debug
 
-        # self.controlInput.setCoef(coef)
+        self.controlInput.setCoef(coef)
         # end of debug
 
         # return self
         # self.controlInput.getStates().calcErr()
         # self.controlInput.getStates().calcErrDot()
 
+        # debug
+        # no adaptive
         self.controlInput.calcControlInput()
+        # end of debug
 
         # self.controlInput.setControlInput(0.0)
         # end of debug
