@@ -150,7 +150,7 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
-    plt.plot(self.resultT, self.errorResultX, label="error")
+    ## plt.plot(self.resultT, self.errorResultX, label="error")
     ## plt.plot(self.resultT, self.estimationError, label="estimation error")
 
     # 凡例の表示
@@ -231,7 +231,7 @@ controlInput.setCoef(coefs)
 # nonlinear void disturbance
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 
-disturbanceF = lambda t, x, xDot: math.sin(1.0 * t)
+disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
@@ -250,8 +250,8 @@ env.setX(10.0)
 env.setXDot(5.0)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
 delta = 0.00001
-ode = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
-ode.solve()
+odeBatch = TestODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
+odeBatch.solve()
 
 # plot
 # ode.saveToFile(-200.0, 200.0, -200.0, 200.0)
@@ -263,4 +263,4 @@ ode.solve()
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-ode.saveToFileTime(100.0, -2.0, 2.0)
+ode.saveToFileTime(100.0, -3.0, 3.0)
