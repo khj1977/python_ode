@@ -58,6 +58,7 @@ class KDisturbanceObserver:
 
         # debug
         # the following def control may cause bug.
+        # Is disturbance observer really tracks modified reference signal?
         # end of debug
         self.disturbanceObserverEngine = ode_euler.ODEOneDimEulerMethod(envT.getDeltaT(), envT.getStartT(), envT.getEndT(), startX, startXDot, self.f, self.states, envT, self.controlInputNominalReal, self.controlInput, nullDisturbance)
 
@@ -99,6 +100,10 @@ class KDisturbanceObserver:
         self.errorDynamics.calcErrDot()
 
         # feedback estimated disturbance to actual system for closed loop system
+        # debug
+        # The following could cause problem for estimation of disturbance for
+        # closed loop system.
+        # end of debug
         self.controlInputReal.setControlInput(self.controlInput.getControlInput())
 
         return result
