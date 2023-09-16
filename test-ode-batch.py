@@ -28,6 +28,8 @@ class TestODEBatch(batch.Batch):
     # control of nominal system
     controlInputReal = ode_control_input.ControlInput()
     controlInputNominalReal = ode_control_input.ControlInput()
+
+    # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, controlInputNominal, disturbance):
     self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, controlInputNominalReal, disturbance)
     self.disturbance = disturbance
     # end of debug
@@ -42,6 +44,8 @@ class TestODEBatch(batch.Batch):
     # debug
     # The last argument may be changed.
     # def __init__(self, odeEngineReal, controlInputReal, envT, f, startX, startXDot):
+
+     # def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa)
     self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa)
     # end of debug
 

@@ -23,6 +23,8 @@ class KDisturbanceObserver:
         self.controlInputNominalReal = controlInputNominalReal
         # self.controlInput = controlInput
         # control input for observer not actual system or modified refernece signal.
+        
+        # estimated disturbance
         self.controlInput = ControlInput()
         self.lambdas = initLambdas
         self.kappa = kappa
