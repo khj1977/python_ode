@@ -27,7 +27,8 @@ class TestODEBatch(batch.Batch):
     # debug
     # refactor ODE engine to handle two control inputs for cancel out disturbance and 
     # control of nominal system
-    controlInputReal = ode_control_input.ControlInput()
+    ## controlInputReal = ode_control_input.ControlInput()
+    controlInputReal = ode_robust_control_input.RobustControlInput()
     controlInputNominalReal = ode_control_input.ControlInput()
 
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, controlInputNominal, disturbance):
@@ -49,6 +50,9 @@ class TestODEBatch(batch.Batch):
      # def __init__(self, odeEngineReal, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa)
     self.disturbanceObserver = KDisturbanceObserver(self.odeEngine, controlInputReal, controlInputNominalReal, envT, f, startX, startXDot, delta, rateLambda, initLambdas, nominalCoefs, kappa)
     # end of debug
+
+    estimatedDisturbance = self.disturbanceObserver.getEstimatedDisturbanceDynamics()
+    controlInputReal.setDisturbance(estimatedDisturbance)
 
     self.resultT = []
 

@@ -2,10 +2,15 @@ class RobustControlInput:
     def __init__(self):
         self.u = 0.0
         self.prevU = 0.0
-        return self
+        # return self
         
+    def setDisturbance(self, estimatedDisturbance):
+        self.estimatedDisturbance = estimatedDisturbance
+        return self
+    
     def getControlInput(self):
         return self.u
+        # return -1.0 * self.estimatedDisturbance.getControlInput()
 
     def getControlInputDot(self):
         deltaT = self.envT.getDeltaT()
@@ -35,6 +40,8 @@ class RobustControlInput:
 
     # linear control input which is a * x where they are vector.
     def calcControlInput(self):
+        self.prevU = self.u
+        self.u = -1.0 * self.estimatedDisturbance.getControlInput()
         return self
         # end of debug
  
