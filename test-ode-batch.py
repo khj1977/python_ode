@@ -155,8 +155,8 @@ class TestODEBatch(batch.Batch):
     plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
-    ## plt.plot(self.resultT, self.errorResultX, label="error")
-    ## plt.plot(self.resultT, self.estimationError, label="estimation error")
+    # plt.plot(self.resultT, self.errorResultX, label="error")
+    plt.plot(self.resultT, self.estimationError, label="estimation error")
 
     # 凡例の表示
     plt.legend()
