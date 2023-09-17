@@ -9,7 +9,7 @@ class RobustControlInput:
         return self
     
     def getControlInput(self):
-        return self.u
+        return -1.0 * self.u
         # return -1.0 * self.estimatedDisturbance.getControlInput()
 
     def getControlInputDot(self):

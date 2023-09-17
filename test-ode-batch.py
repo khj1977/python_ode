@@ -41,7 +41,7 @@ class TestODEBatch(batch.Batch):
     # self.odeEngine = ode_euler.ODEOneDimEulerMethod(0.01, 0, 100, 0.1, 0.1)
     # def __init__(self, odeEngineReal, odeEngineObserver, controlInput):
     self.observer = observer.Observer(self.odeEngine, self.observerEngine, controlInput)
-    self.controlInput = controlInput
+    # self.controlInput = controlInput
 
     # debug
     # The last argument may be changed.
