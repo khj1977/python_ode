@@ -236,7 +236,8 @@ controlInput.setCoef(coefs)
 # nonlinear void disturbance
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 
-disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
+# disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
+disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
@@ -254,7 +255,7 @@ controlInput.setState(errorDynamics)
 env.setX(10.0)
 env.setXDot(5.0)
 # def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
-delta = 0.00000001
+delta = 0.00000000001
 odeBatch = ODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 0.01, controlInput, disturbance, initLambdas, nominalCoefs, 0.2)
 odeBatch.solve()
 
@@ -268,4 +269,4 @@ odeBatch.solve()
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-odeBatch.saveToFileTime(100.0, -3.0, 3.0)
+odeBatch.saveToFileTime(100.0, -1.0, 1.0)
