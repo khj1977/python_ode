@@ -192,7 +192,7 @@ class KDisturbanceObserver:
         coef.setCoefs(gain)
 
         # debug
-        print(k1)
+        # print(k1)
         # end of debug
 
         # debug
