@@ -222,7 +222,8 @@ envT = ode_time.ODETime(0, endT, 0.01)
 controlInput = ode_control_input.ControlInput()
 controlInput.setEnvT(envT)
 coefs = ODECoefs()
-coefs.setCoefs([3.0, 15.0])
+# coefs.setCoefs([3.0, 15.0])
+coefs.setCoefs([0.0, 0.0])
 # coefs.setCoefs([10.0, 15.0])
 # coefs.setCoefs([6.0, 5.0])
 controlInput.setCoef(coefs)
@@ -237,7 +238,9 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -1.0 * math.sin(t) * x - math.cos(t) * xDot - 2.0 * math.sin(t) * x + 6.0 * math.sin(t)
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
-disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
+# disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
+# disturbanceF = lambda t, x, xDot: -1.0 * x*x*x + 0.5 * math.sin(1.0 * t)
+disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t) + 0.2 * math.sin(2.0 * t)
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot

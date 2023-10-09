@@ -1,4 +1,4 @@
-class RobustControlInput:
+class NullControlInput:
     def __init__(self):
         self.u = 0.0
         self.prevU = 0.0
@@ -9,8 +9,7 @@ class RobustControlInput:
         return self
     
     def getControlInput(self):
-        return -1.0 * self.u
-        # return 0.0
+        return 0.0
         # return -1.0 * self.estimatedDisturbance.getControlInput()
 
     def getControlInputDot(self):
