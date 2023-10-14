@@ -172,10 +172,10 @@ class KDisturbanceObserver:
         # lambda1 = 50.0
         lambda2 = lambda1 * self.kappa
 
-        print(lambda1)
-        print(" ")
-        print(lambda2)
-        print("\n")
+        # print(lambda1)
+        # print(" ")
+        # print(lambda2)
+        # print("\n")
 
         # print(lambda1)
 
@@ -185,7 +185,7 @@ class KDisturbanceObserver:
         #    return
         # end of debug
 
-        # lambda2 = lambda1 * 0.2
+        lambda2 = lambda1 * 0.3
         k1 = (lambda1 * lambda2) - self.nominalCoefs[0]
         k2 = (lambda1 + lambda2) - self.nominalCoefs[1]
 
