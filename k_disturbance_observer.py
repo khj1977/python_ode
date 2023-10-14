@@ -167,10 +167,15 @@ class KDisturbanceObserver:
         # a = np.array([[0., 1.], [a21 + k1, a22 + k2]])
         # w, v = la.eig(a)
         # print(w)
-        self.kappa = 0.001
-        lambda1 = self.lambdas[0] + lambdaDot
+        self.kappa = 0.3
+        lambda1 = self.lambdas[0] - lambdaDot
         # lambda1 = 50.0
         lambda2 = lambda1 * self.kappa
+
+        print(lambda1)
+        print(" ")
+        print(lambda2)
+        print("\n")
 
         # print(lambda1)
 
@@ -181,8 +186,8 @@ class KDisturbanceObserver:
         # end of debug
 
         # lambda2 = lambda1 * 0.2
-        k1 = -1.0 * (lambda1 * lambda2) - self.nominalCoefs[0]
-        k2 = -1.0 * (lambda1 + lambda2) - self.nominalCoefs[1]
+        k1 = (lambda1 * lambda2) - self.nominalCoefs[0]
+        k2 = (lambda1 + lambda2) - self.nominalCoefs[1]
 
         self.lambdas[0] = lambda1
         self.lambdas[1] = lambda2
