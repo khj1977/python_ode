@@ -17,3 +17,6 @@ class ODEAnalogueSineSignal:
     
     def isSin(self):
         pass
+
+    def getLamnda(self):
+        return self.lambda1
