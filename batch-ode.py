@@ -31,6 +31,11 @@ class ODEBatch(batch.Batch):
     controlInputReal = ode_robust_control_input.RobustControlInput()
     controlInputNominalReal = ode_control_input.ControlInput()
 
+    # debug
+    # call some methods for controlInputNominalReal for control of 
+    # unstable nominal system.
+    # end of debug
+
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, controlInputNominal, disturbance):
     self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, controlInputNominalReal, disturbance)
     self.disturbance = disturbance
@@ -151,12 +156,12 @@ class ODEBatch(batch.Batch):
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
     ## plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    # plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
     # plt.plot(self.resultT, self.errorResultX, label="error")
-    plt.plot(self.resultT, self.estimationError, label="estimation error")
+    # plt.plot(self.resultT, self.estimationError, label="estimation error")
 
     # 凡例の表示
     plt.legend()
@@ -201,7 +206,9 @@ class ODEBatch(batch.Batch):
 # f = lambda t, x, xDot: - 6.0 * x - 5.0 * xDot - 10.0 * t * x
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
-f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
+# f = lambda t, x, xDot: -6.0 * x + 5.0 * xDot
+f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
 # init lambdas are eigen vals of nominal system.
 initLambdas = [2.0, 3.0]
 nominalCoefs = [-2.0, -1.0]
@@ -216,7 +223,7 @@ nominalCoefs = [-2.0, -1.0]
 # return (resultT, resultX, resultXDot)
 env = ode_env.ODEEnv()
 envObserver = ode_env.ODEEnv()
-endT = 200.0
+endT = 100.0
 envT = ode_time.ODETime(0, endT, 0.01)
 
 controlInput = ode_control_input.ControlInput()
@@ -240,7 +247,8 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: -1.0 * x*x*x + 0.5 * math.sin(1.0 * t)
-disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t) + 0.2 * math.sin(2.0 * t)
+# disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t) + 0.2 * math.sin(2.0 * t)
+disturbanceF = lambda t, x, xDot: 0.0
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
@@ -272,5 +280,5 @@ odeBatch.solve()
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-odeBatch.saveToFileTime(100.0, -1.0, 1.0)
+odeBatch.saveToFileTime(0.5, 0.0, 1000.0)
 # odeBatch.saveToFileTime(100.0, -0.005, 0.005)
