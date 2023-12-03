@@ -77,7 +77,7 @@ class KDisturbanceObserver:
         # end of debug
 
         # def __init__(self, envT, errorDynamics, delta, omega, epsilon):
-        self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.05, 1.0, 0.01)
+        self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.1, 0.5, 0.001)
 
         # smoothing function of lambda dot
         self.f1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 3.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
@@ -160,6 +160,7 @@ class KDisturbanceObserver:
         # end of debug
 
 
+        # lambdaDot = 0.0
         if self.lyapunovValue < self.delta:
             lambdaDot = 0.0
         else:

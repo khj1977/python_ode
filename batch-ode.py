@@ -87,6 +87,8 @@ class ODEBatch(batch.Batch):
 
     self.estimationError = []
 
+    self.resultLambda = []
+
   def solve(self):
     # self.resultT, self.resultX, self.resultXDot = self.odeEngine.solve(f)
 
