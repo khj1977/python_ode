@@ -79,6 +79,8 @@ class KDisturbanceObserver:
         # def __init__(self, envT, errorDynamics, delta, omega, epsilon):
         self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.1, 0.5, 0.001)
 
+        self.resultLambdas = []
+
         # smoothing function of lambda dot
         self.f1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 3.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
         self.f2 = lambda t, tau, omega, lambdaDot: 0.0
@@ -188,6 +190,8 @@ class KDisturbanceObserver:
         # lambda1 = 50.0
         lambda2 = lambda1 * self.kappa
 
+        self.resultLambdas.append(lambda1)
+
         # print(lambda1)
         # print(" ")
         # print(lambda2)
@@ -244,3 +248,7 @@ class KDisturbanceObserver:
     def applyControlInput(self, controlInput):
         return self
     # end of debug
+
+    def getResultLambdas(self):
+        return self.resultLambdas
+    
