@@ -94,6 +94,8 @@ class KDisturbanceObserver:
         self.errorDynamics.calcErr()
         # end of debug
 
+        self.deltaLambda.inc(self.getLambdas())
+
         self.calcControlInput()
         self.applyControlInput(self.controlInput)
         
@@ -158,12 +160,12 @@ class KDisturbanceObserver:
         # end of debug
 
 
-
         if self.lyapunovValue < self.delta:
             lambdaDot = 0.0
         else:
             # lambdaDot = self.rateLambda
-            lambdaDot = 0.005
+            # lambdaDot = 0.005
+            lambdaDot = self.deltaLambda.getDeltaLambda()
 
         # print(self.lyapunovValue)
         
