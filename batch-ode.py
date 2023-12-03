@@ -155,7 +155,7 @@ class ODEBatch(batch.Batch):
     plt.ylim(xMin, xMax)
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
-    ## plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
+    # plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
     # plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
     # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
@@ -207,11 +207,11 @@ class ODEBatch(batch.Batch):
 # f = lambda t, x, xDot: - (6.0 + math.sin(t)) * x - (5.0 + math.cos(t)) * xDot - (2.0 * math.sin(t)) * x
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot + 3.0 * np.cos(x)
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
-# f = lambda t, x, xDot: -6.0 * x + 5.0 * xDot
-f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
+f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
+# f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
 # init lambdas are eigen vals of nominal system.
-initLambdas = [2.0, 3.0]
-nominalCoefs = [-2.0, -1.0]
+initLambdas = [-2.0, -3.0]
+nominalCoefs = [-6.0, -5.0]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -280,5 +280,5 @@ odeBatch.solve()
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-odeBatch.saveToFileTime(0.5, 0.0, 1000.0)
+odeBatch.saveToFileTime(100.0, -10.0, 10.0)
 # odeBatch.saveToFileTime(100.0, -0.005, 0.005)

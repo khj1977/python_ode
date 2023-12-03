@@ -7,6 +7,7 @@ from ode_env import ODEEnv
 import ode_euler
 import ode_coefs
 import ode_control_input
+import ode_delta_lambda
 import math
 from numpy import linalg as la
 import numpy as np
@@ -74,6 +75,9 @@ class KDisturbanceObserver:
         self.controlInput.setEnvT(self.envT)
         self.controlInput.setState(self.errorDynamics)
         # end of debug
+
+        # def __init__(self, envT, errorDynamics, delta, omega, epsilon):
+        self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.05, 1.0, 0.01)
 
         # smoothing function of lambda dot
         self.f1 = lambda t, tau, omega, lambdaDot: 1.0 / 2.0 * lambdaDot * math.sin(omega * (t * tau) + 3.0 / 2.0 * math.pi) - 1.0 / 2.0 * lambdaDot
@@ -152,6 +156,8 @@ class KDisturbanceObserver:
         # set tau as actual num which is current time for start.
         # capule those info to objects and make method lambdaUncrementer->exec()
         # end of debug
+
+
 
         if self.lyapunovValue < self.delta:
             lambdaDot = 0.0

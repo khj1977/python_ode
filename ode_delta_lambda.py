@@ -7,28 +7,28 @@ class DeltaLambda:
     # set tau as actual num which is current time for start.
     # capule those info to objects and make method lambdaUncrementer->exec()
     # end of debug
-    def __init__(self, envT, errorDynamics, delta, omega, tau, epsilon):
+    def __init__(self, envT, errorDynamics, delta, omega, epsilon):
         self.envT = envT
         self.errorDynamics = errorDynamics
 
         self.setDelta(delta)
         self.setOmega(omega)
-        self.setTau(tau)
+        # self.setTau(tau)
         self.setEpsilon(epsilon)
 
 
-        def calcF(t, that):
+        def calcF(t, tau, that):
             if (t <= math.pi / omega + tau):
-                1.0 / 2.0 * delta * math.sin(omega * (t - tau) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
+                1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
             else:
                 return 0.0
 
         self.calcF = calcF
         
-        def calcG(t, that): 
+        def calcG(t, tau, that): 
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(True)
-                return 1.0 / 2.0 * delta * math.sin(omega * (t - tau) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                return 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
             else:
                 that.setIsDelta(False)
                 return 0.0
@@ -37,7 +37,7 @@ class DeltaLambda:
        
         self.calcQ = lambda x: 0.0
 
-        self.lambdaDot = self.calcH
+        # self.lambdaDot = self.calcH
 
         self.innerFunc = self.calcQ
 
@@ -46,8 +46,10 @@ class DeltaLambda:
         e2 = self.epsilon * self.epsilon
 
         if self.lyapunovValue <= e2 and self.getIsDelta():
+            self.setTau(self.envT.get())
             self.innerFunc = self.calcF
         elif self.lyapunovValue > e2 and not(self.getIsDelta()):
+            self.setTau(self.envT.getT())
             self.innerFunc = self.calcG
         else:
             self.innerFunc = self.calcQ
@@ -78,6 +80,9 @@ class DeltaLambda:
         self.tau = tau
 
         return self
+    
+    def getTau(self):
+        return self.tau
 
     def setEpsilon(self, e):
         self.epsilon = e
