@@ -19,27 +19,27 @@ class DeltaLambda:
         self.setIsDelta(False)
 
 
-        def calcF(t, tau, that):
+        def calcF(t, tau, delta, that):
             if (t <= math.pi / omega + tau):
-                that.setIsDelta(False)
+                that.setIsDelta(True)
                 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
             else:
-                that.isDelta(True)
+                that.isDelta(False)
                 return 0.0
 
         self.calcF = calcF
         
-        def calcG(t, tau, that): 
+        def calcG(t, tau, delta, that): 
             if (t <= math.pi / omega + tau):
-                that.setIsDelta(True)
+                that.setIsDelta(False)
                 return 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
             else:
-                that.setIsDelta(False)
-                return 0.0
+                that.setIsDelta(True)
+                return delta
         
         self.calcG = calcG
        
-        self.calcQ = lambda x, y, z: 0.0
+        self.calcQ = lambda x, y, w, z: 0.0
 
         # self.lambdaDot = self.calcH
 
@@ -60,7 +60,7 @@ class DeltaLambda:
 
 
     def getDeltaLambda(self):
-        return self.innerFunc(self.envT.getT(), self.getTau(), self)
+        return self.innerFunc(self.envT.getT(), self.getTau(), self.getDelta(), self)
 
     def setIsDelta(self, flag):
         self.isDelta = flag
@@ -74,6 +74,9 @@ class DeltaLambda:
         self.delta = delta
 
         return self
+    
+    def getDelta(self):
+        return self.delta
 
     def setOmega(self, omega):
         self.omega = omega
