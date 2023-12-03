@@ -18,24 +18,45 @@ class DeltaLambda:
 
         self.setIsDelta(False)
 
+        self.setTau(0.0)
+
 
         def calcF(t, tau, delta, that):
+            print("calc-f")
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(True)
-                1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
+                d =  1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
+                print("foo1")
             else:
-                that.isDelta(False)
-                return 0.0
+                that.setIsDelta(False)
+                d = 0.0
+                print("foo2")
+
+            print(d)
+            print("\n")
+
+            return d
 
         self.calcF = calcF
         
         def calcG(t, tau, delta, that): 
+            print("calc-g")
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(False)
-                return 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                d = 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                print(math.pi / omega + tau)
+                print(t)
+                print("bar1")
             else:
                 that.setIsDelta(True)
-                return delta
+                d = delta
+                print(t)
+                print("bar2")
+
+            print(d)
+            print("\n")
+
+            return d
         
         self.calcG = calcG
        
@@ -49,14 +70,19 @@ class DeltaLambda:
         self.lyapunovValue = self.errorDynamics.getTrans2Norm(lambdas)
         e2 = self.epsilon * self.epsilon
 
-        if self.lyapunovValue <= e2 and self.getIsDelta():
-            self.setTau(self.envT.get())
+        # if self.lyapunovValue <= e2 and self.getIsDelta():
+        if self.lyapunovValue > e2 and self.getIsDelta():
+            if not(self.getIsDelta()):
+                self.setTau(self.envT.get())
             self.innerFunc = self.calcF
         elif self.lyapunovValue > e2 and not(self.getIsDelta()):
-            self.setTau(self.envT.getT())
+            if self.getIsDelta():
+                self.setTau(self.envT.getT())
             self.innerFunc = self.calcG
         else:
             self.innerFunc = self.calcQ
+
+        print(self.getIsDelta())
 
 
     def getDeltaLambda(self):

@@ -77,7 +77,7 @@ class KDisturbanceObserver:
         # end of debug
 
         # def __init__(self, envT, errorDynamics, delta, omega, epsilon):
-        self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.001, 0.5, 0.001)
+        self.deltaLambda = ode_delta_lambda.DeltaLambda(envT, self.errorDynamics, 0.005, 10.0, 0.001)
 
         self.resultLambdas = []
 
