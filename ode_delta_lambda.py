@@ -12,8 +12,8 @@ class DeltaLambda:
         self.calcG = lambda x: x + 1
 
         delta = self.getDelta()
-        self.calcH = lambda x: return -1.0 * delta
-        self.calcQ = lambda x: return 0.0
+        self.calcH = lambda x: -1.0 * delta
+        self.calcQ = lambda x: 0.0
 
         self.lambdaDot = self.calcH
 
