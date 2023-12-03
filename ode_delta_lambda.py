@@ -76,7 +76,7 @@ class DeltaLambda:
                 self.setTau(self.envT.get())
             self.innerFunc = self.calcF
         elif self.lyapunovValue > e2 and not(self.getIsDelta()):
-            if self.getIsDelta():
+            if not (self.getIsDelta()):
                 self.setTau(self.envT.getT())
             self.innerFunc = self.calcG
         else:
@@ -86,7 +86,11 @@ class DeltaLambda:
 
 
     def getDeltaLambda(self):
-        return self.innerFunc(self.envT.getT(), self.getTau(), self.getDelta(), self)
+        print("delta: " + str(self.getDelta()))
+        d = self.innerFunc(self.envT.getT(), self.getTau(), self.getDelta(), self)
+        print("d2: " + str(d))
+
+        return d
 
     def setIsDelta(self, flag):
         self.isDelta = flag
