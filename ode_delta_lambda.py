@@ -7,6 +7,13 @@ class DeltaLambda:
     # end of debug
     def __init__(self, envT):
         self.envT = envT
+
+        self.calcF = lambda x: x
+        self.calcG = lambda x: x + 1
+        self.calcH = lambda x: x + 2
+
+        self.lambdaDot = self.calcH
+
         pass
 
     def inc(self):
@@ -15,14 +22,11 @@ class DeltaLambda:
     def getDeltaLambda(self);
         pass
 
+    def getLambda(self):
+        pass
+
     def setOmega(self, omega):
         pass
 
     def setTau(self, tau):
-        pass
-
-    def calcF(self):
-        pass
-
-    def calcG(self):
         pass
