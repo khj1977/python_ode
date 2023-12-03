@@ -16,19 +16,25 @@ class DeltaLambda:
         self.setTau(tau)
         self.setEpsilon(epsilon)
 
-        self.calcF = lambda x: x
+
+        def calcF(t, that):
+            if (t <= math.pi / omega + tau):
+                1.0 / 2.0 * delta * math.sin(omega * (t - tau) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
+            else:
+                return 0.0
+
+        self.calcF = calcF
         
         def calcG(t, that): 
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(True)
-                1.0 / 2.0 * delta * math.sin(omega * (t - tau) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                return 1.0 / 2.0 * delta * math.sin(omega * (t - tau) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
             else:
                 that.setIsDelta(False)
-                0.0
+                return 0.0
         
         self.calcG = calcG
        
-        self.calcH = lambda x: -1.0 * delta
         self.calcQ = lambda x: 0.0
 
         self.lambdaDot = self.calcH
@@ -48,7 +54,7 @@ class DeltaLambda:
 
 
     def getDeltaLambda(self):
-        pass
+        return self.innerFunc(self.envT.getT(), self)
 
     def setIsDelta(self, flag):
         self.ifDelta = flag
