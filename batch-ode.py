@@ -156,8 +156,8 @@ class ODEBatch(batch.Batch):
     plt.xlim(0, tMax)
     plt.plot(self.resultT, self.resultX, label="actual system")
     # plt.plot(self.resultT, self.disturbanceObserverResultX, label="disturbance observer")
-    # plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
-    # plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
+    plt.plot(self.resultT, self.controlResultX, label="estimated disturbance")
+    plt.plot(self.resultT, self.disturbanceResultX, label="disturbance")
     #plt.plot(self.resultT, self.modifiedReferemceResultX, label="modified signal")
     #plt.plot(self.resultT, self.ffResultX, label="ff signal")
     # plt.plot(self.resultT, self.errorResultX, label="error")
@@ -248,12 +248,12 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: -1.0 * x*x*x + 0.5 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t) + 0.2 * math.sin(2.0 * t)
-disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: 0.0
 
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: 1.0 * x - 1.5 * xDot
-#disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
-# disturbanceF = lambda t, x, xDot: 6.0 * math.sin(t)
+# disturbanceF = lambda t, x, xDot: 4.0 * x + 1.5 * xDot
+disturbanceF = lambda t, x, xDot: 1.0 * math.sin(t)
 disturbance = ode_disturbance.Disturbance(disturbanceF, env, envT)
 # end of debug
 
