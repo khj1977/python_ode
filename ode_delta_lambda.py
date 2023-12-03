@@ -71,7 +71,7 @@ class DeltaLambda:
         e2 = self.epsilon * self.epsilon
 
         # if self.lyapunovValue <= e2 and self.getIsDelta():
-        if self.lyapunovValue > e2 and self.getIsDelta():
+        if self.lyapunovValue <= e2 and self.getIsDelta():
             if not(self.getIsDelta()):
                 self.setTau(self.envT.get())
             self.innerFunc = self.calcF
