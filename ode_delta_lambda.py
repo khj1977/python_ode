@@ -24,43 +24,43 @@ class DeltaLambda:
 
 
         def calcF(t, tau, delta, that):
-            print("calc-f")
+            # print("calc-f")
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(True)
                 d =  1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
                 self.setPrevDelta(d)
-                print("foo1")
+                #p rint("foo1")
             else:
                 that.setIsDelta(False)
                 d = 0.0
                 self.setPrevDelta(d)
-                print("foo2")
+                # print("foo2")
 
-            print(d)
-            print("\n")
+            # print(d)
+            # print("\n")
 
             return d
 
         self.calcF = calcF
         
         def calcG(t, tau, delta, that): 
-            print("calc-g")
+            # print("calc-g")
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(False)
                 d = 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 1.0/2.0 * math.pi) - 1.0 / 2.0 * delta
                 self.setPrevDelta(d)
-                print(math.pi / omega + tau)
-                print(t)
-                print("bar1")
+                # print(math.pi / omega + tau)
+                # print(t)
+                # print("bar1")
             else:
                 that.setIsDelta(True)
                 d = 1.0 * delta
                 self.setPrevDelta(d)
-                print(t)
-                print("bar2")
+                # print(t)
+                # print("bar2")
 
-            print(d)
-            print("\n")
+            # print(d)
+            # print("\n")
 
             return d
         
@@ -87,16 +87,16 @@ class DeltaLambda:
                 self.setTau(self.envT.getT())
             self.innerFunc = self.calcG
         else:
-            print("calc-q")
+            # print("calc-q")
             self.innerFunc = self.calcQ
 
-        print(self.getIsDelta())
+        # print(self.getIsDelta())
 
 
     def getDeltaLambda(self):
-        print("delta: " + str(self.getDelta()))
+        # print("delta: " + str(self.getDelta()))
         d = self.innerFunc(self.envT.getT(), self.getTau(), self.getDelta(), self)
-        print("d2: " + str(d))
+        # print("d2: " + str(d))
 
         return d
 
