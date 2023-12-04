@@ -195,7 +195,7 @@ class ODEBatch(batch.Batch):
     plt.plot(self.controlResultXDot, self.controlResultX, label="estimated disturbance")
     
     plt.plot(self.disturbanceResultXDot, self.disturbanceResultX, label="disturbance")
-    plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
+    # plt.plot(self.disturbanceObserverResultXDot, self.disturbanceObserverResultX, label="disturbance observer")
     # 凡例の表示
     plt.legend()
 
@@ -275,14 +275,14 @@ odeBatch = ODEBatch(0.01, 0, 10.0, 10.0, 5.0, f, env, envObserver, envT, delta, 
 odeBatch.solve()
 
 # plot
-# ode.saveToFile(-200.0, 200.0, -200.0, 200.0)
+# odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
-# odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
+odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-odeBatch.saveToFileTime(100.0, -50.0, 50.0)
+# odeBatch.saveToFileTime(100.0, -50.0, 50.0)
 # odeBatch.saveToFileTime(100.0, -0.005, 0.005)
