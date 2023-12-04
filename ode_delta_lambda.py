@@ -43,13 +43,13 @@ class DeltaLambda:
             print("calc-g")
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(False)
-                d = 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                d = 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 1.0/2.0 * math.pi) - 1.0 / 2.0 * delta
                 print(math.pi / omega + tau)
                 print(t)
                 print("bar1")
             else:
                 that.setIsDelta(True)
-                d = delta
+                d = -1.0 * delta
                 print(t)
                 print("bar2")
 
@@ -76,10 +76,12 @@ class DeltaLambda:
                 self.setTau(self.envT.get())
             self.innerFunc = self.calcF
         elif self.lyapunovValue > e2 and not(self.getIsDelta()):
-            if not (self.getIsDelta()):
+        # elif self.lyapunovValue > e2:
+            if self.getIsDelta():
                 self.setTau(self.envT.getT())
             self.innerFunc = self.calcG
         else:
+            print("calc-q")
             self.innerFunc = self.calcQ
 
         print(self.getIsDelta())
