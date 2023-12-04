@@ -20,6 +20,8 @@ class DeltaLambda:
 
         self.setTau(0.0)
 
+        self.setPrevDelta(0.0)
+
 
         def calcF(t, tau, delta, that):
             print("calc-f")
@@ -44,12 +46,14 @@ class DeltaLambda:
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(False)
                 d = 1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 1.0/2.0 * math.pi) - 1.0 / 2.0 * delta
+                self.setPrevDelta(d)
                 print(math.pi / omega + tau)
                 print(t)
                 print("bar1")
             else:
                 that.setIsDelta(True)
-                d = -1.0 * delta
+                d = 1.0 * delta
+                self.setPrevDelta(d)
                 print(t)
                 print("bar2")
 
@@ -60,7 +64,7 @@ class DeltaLambda:
         
         self.calcG = calcG
        
-        self.calcQ = lambda x, y, w, z: 0.0
+        self.calcQ = lambda x, y, w, that: that.getPrevDelta()
 
         # self.lambdaDot = self.calcH
 
@@ -127,3 +131,11 @@ class DeltaLambda:
         self.epsilon = e
 
         return self
+    
+    def setPrevDelta(self, prevDelta):
+        self.prevDelta = prevDelta
+
+        return self
+
+    def getPrevDelta(self):
+        return self.prevDelta
