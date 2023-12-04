@@ -28,10 +28,12 @@ class DeltaLambda:
             if (t <= math.pi / omega + tau):
                 that.setIsDelta(True)
                 d =  1.0 / 2.0 * delta * math.sin(omega * (t - that.getTau()) + 3.0 / 2,0 * math.pi) - 1.0 / 2.0 * delta
+                self.setPrevDelta(d)
                 print("foo1")
             else:
                 that.setIsDelta(False)
                 d = 0.0
+                self.setPrevDelta(d)
                 print("foo2")
 
             print(d)
