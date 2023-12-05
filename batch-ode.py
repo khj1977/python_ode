@@ -214,7 +214,7 @@ f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
 # f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
 # init lambdas are eigen vals of nominal system.
-initLambdas = [-2.0, -3.0]
+initLambdas = [-5.0, -4.9]
 nominalCoefs = [-2.0, -1.0]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
@@ -279,10 +279,10 @@ odeBatch.solve()
 # ode.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
-odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
+# odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
 # ode.saveToFileTime(100.0, -100.0, 100.0)
 ## ode.saveToFileTime(endT, -15.0, 15.0)
 # ode.saveToFileTime(endT, -0.2, 0.2)
-# odeBatch.saveToFileTime(100.0, -50.0, 50.0)
+odeBatch.saveToFileTime(100.0, -40.0, 40.0)
 # odeBatch.saveToFileTime(100.0, -0.005, 0.005)
