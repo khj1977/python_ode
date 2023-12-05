@@ -214,14 +214,35 @@ class ODEBatch(batch.Batch):
 # f = lambda t, x, xDot: -2.0 * x - 1.0 * xDot
 
 # eig value is [1] 1+1.414214i 1-1.414214i
-f = lambda t, x, xDot: -3.0 * x + 2.0 * xDot
+# f = lambda t, x, xDot: -3.0 * x + 2.0 * xDot
+
+# > I = matrix(c(0, -0.02, 1, -0.3), nrow=2)
+# > eigen(I)
+# eigen() decomposition
+# $values
+# [1] -0.2 -0.1
+# 
+# $vectors
+#            [,1]        [,2]
+# [1,] -0.9805807  0.99503719
+# [2,]  0.1961161 -0.09950372
+# 
+# > I
+#       [,1] [,2]
+# [1,]  0.00  1.0
+# [2,] -0.02 -0.3
+
+# f = lambda t, x, xDot: -0.02 * x - 0.3 * xDot
+f = lambda t, x, xDot: -0.02 * x - 0.03 * xDot
+
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
 # f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
 # init lambdas are eigen vals of nominal system.
 initLambdas = [-5.0, -4.9]
 # nominal for void disturbance
 # nominalCoefs = [-2.0, -1.0]
-nominalCoefs = [6.0, 10.0]
+# nominalCoefs = [6.0, 10.0]
+nominalCoefs = [-0.02, -0.03]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -258,6 +279,9 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -12.0 * x - 15.0 * xDot
 
 # periodical controller
+# disturbanceF = lambda t, x, xDot: -3.0 * x + -7.0 * xDot
+
+# disturbanceF = lambda t, x, xDot: -0.27 * xDot
 disturbanceF = lambda t, x, xDot: 0.0
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
@@ -289,12 +313,12 @@ odeBatch.solve()
 # plot
 # odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
-# ode.saveToFile(-5.0, 5.0, -5.0, 5.0)
+# odeBatch.saveToFile(-3.0, 3.0, -3.0, 3.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
 
-# ode.saveToFileTime(100.0, -100.0, 100.0)
-ode.saveToFileTime(endT, -15.0, 15.0)
+# odeBatch.saveToFileTime(100.0, -100.0, 100.0)
+# odeBatch.saveToFileTime(endT, -15.0, 15.0)
 # odeBatch.saveToFileTime(endT, -1200.0, 1020.0)
 # odeBatch.saveToFileTime(100.0, -40.0, 40.0)
-# odeBatch.saveToFileTime(100.0, -0.005, 0.005)
+odeBatch.saveToFileTime(100.0, -2.5, 2.5)
