@@ -233,7 +233,9 @@ class ODEBatch(batch.Batch):
 # [2,] -0.02 -0.3
 
 # f = lambda t, x, xDot: -0.02 * x - 0.3 * xDot
-f = lambda t, x, xDot: -0.02 * x - 0.03 * xDot
+# f = lambda t, x, xDot: -0.02 * x - 0.03 * xDot
+f = lambda t, x, xDot: -0.02 * x
+# f = lambda t, x, xDot: -0.3 * xDot
 
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
 # f = lambda t, x, xDot: 1.0 * x + 6.0 * xDot
@@ -242,7 +244,7 @@ initLambdas = [-5.0, -4.9]
 # nominal for void disturbance
 # nominalCoefs = [-2.0, -1.0]
 # nominalCoefs = [6.0, 10.0]
-nominalCoefs = [-0.02, -0.03]
+nominalCoefs = [-0.02, 0.00]
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * math.sin(2.0 * x) * x * xDot
 # f = lambda t, x, xDot: -3.0 * x - 0.1 * xDot
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -281,8 +283,9 @@ controlInput.setCoef(coefs)
 # periodical controller
 # disturbanceF = lambda t, x, xDot: -3.0 * x + -7.0 * xDot
 
-# disturbanceF = lambda t, x, xDot: -0.27 * xDot
-disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: -0.3 * xDot
+# disturbanceF = lambda t, x, xDot: 0.0
+disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
@@ -312,7 +315,7 @@ odeBatch.solve()
 
 # plot
 # odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
-# odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
+odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
 # odeBatch.saveToFile(-3.0, 3.0, -3.0, 3.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
@@ -321,4 +324,4 @@ odeBatch.solve()
 # odeBatch.saveToFileTime(endT, -15.0, 15.0)
 # odeBatch.saveToFileTime(endT, -1200.0, 1020.0)
 # odeBatch.saveToFileTime(100.0, -40.0, 40.0)
-odeBatch.saveToFileTime(100.0, -2.5, 2.5)
+# odeBatch.saveToFileTime(100.0, -4.5, 4.5)
