@@ -1,6 +1,6 @@
 # Introduction
 
-This code is for numerical experiment or simulation of k-disturbance observer shown at my core M.Phil thesis. For core of solver, euler method is used. Although the author knows existence of Runge-Kutta, it is thought that there are no reason to deploy Runge-Kutta and euler method is natural as mathematics of differential equation.
+This code is for numerical experiment or simulation of k-disturbance observer shown at my [M.Phil thesis](https://www.khj1977.net/mphil_thesis_additional/). For core of solver, euler method is used. Although the author knows existence of Runge-Kutta, it is thought that there are no reason to deploy Runge-Kutta and euler method is natural as mathematics of differential equation.
 
 Since, disturbance observer require some number of ODE solvers, ODE solver is enclosed on the class. Unlike general ODE solvers, there are several classes which corporate with each other and much number of object composition is used.
 
