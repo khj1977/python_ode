@@ -9,3 +9,11 @@ That's fine to just use this solver if one is non engineering student or even hi
 With M1 Apple which, this simulator is fast enough but if one want to deploy disturbance observer for robotics or even smart material systems, etc, it is better to implement by C++ or C with function pointer.
 
 Robotics? Yes, this algorithm of robust control could be used to robotics as well. Or even, for active suspension of vehicle, it could be used.
+
+# How to run?
+
+At command line of mac or linux desktop evironment, execute the following command:
+
+python batch-ode.py 
+
+Several settings of ODE and init value or disturbance can be found on some files of python. More general way setting would be remain to further work of university student user.
