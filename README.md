@@ -6,7 +6,7 @@ Since disturbance observer require some number of ODE solvers, ODE solver is enc
 
 That's fine to just use this solver if one is non engineering student or even high school student. However, if one is engineering or science student and if one would go to post graduate school, it is better to modify this code for more general situation;i.e. high order systems or even multi-input systems.
 
-With M1 Apple which, this simulator is fast enough but if one want to deploy disturbance observer for robotics or even smart material systems, etc, it is better to implement by C++ or C with function pointer.
+With M1 Apple, this simulator is fast enough but if one want to deploy disturbance observer for robotics or even smart material systems, etc, it is better to implement by C++ or C with function pointer.
 
 Robotics? Yes, this algorithm of robust control could be used to robotics as well. Or even, for active suspension of vehicle, it could be used.
 
