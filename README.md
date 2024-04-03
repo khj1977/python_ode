@@ -16,4 +16,4 @@ At command line of mac or linux desktop evironment, execute the following comman
 
 python batch-ode.py 
 
-Several settings of ODE and init value or disturbance can be found on some files of python. More general way setting would be remain to further work of university student user.
+Several settings of ODE and init value or disturbance can be found on some files of python. More general way of setting would be remain to further work of university student user.
