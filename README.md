@@ -11,7 +11,7 @@ With M1 Apple, this simulator is fast enough but if one want to deploy disturban
 Robotics? Yes, this algorithm of robust control could be used to robotics as well. Or even, for active suspension of vehicle, it could be used.
 
 # How to run?
-q
+
 At command line of mac or linux desktop evironment, execute the following command:
 
 python batch-ode.py 
