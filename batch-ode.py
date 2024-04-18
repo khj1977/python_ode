@@ -317,7 +317,7 @@ odeBatch.solve()
 
 # plot
 # odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
-odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
+odeBatch.saveToFile(4.0, 6.0, -2.0, 2.0)
 # odeBatch.saveToFile(-3.0, 3.0, -3.0, 3.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
