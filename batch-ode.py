@@ -234,7 +234,13 @@ class ODEBatch(batch.Batch):
 
 # f = lambda t, x, xDot: -0.02 * x - 0.3 * xDot
 # f = lambda t, x, xDot: -0.02 * x - 0.03 * xDot
-f = lambda t, x, xDot: -0.02 * x
+# f = lambda t, x, xDot: -0.02 * x
+
+# The following diff eq has been derived by the first prototype of digital
+# lagrangian for nonlinear smart material systems for most simple case.
+# Since it is the most simple case, it does not deploy correlation between
+# theta_i and theta_i+1, etc. It is based on night napkin based work,
+# there could be mistake. It would be investigated seriously later one.
 f = lambda t, x, xDot: -1.2 * math.cos(x)
 # f = lambda t, x, xDot: -0.3 * xDot
 
