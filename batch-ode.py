@@ -235,6 +235,7 @@ class ODEBatch(batch.Batch):
 # f = lambda t, x, xDot: -0.02 * x - 0.3 * xDot
 # f = lambda t, x, xDot: -0.02 * x - 0.03 * xDot
 f = lambda t, x, xDot: -0.02 * x
+f = lambda t, x, xDot: -1.2 * math.cos(x)
 # f = lambda t, x, xDot: -0.3 * xDot
 
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -285,7 +286,8 @@ controlInput.setCoef(coefs)
 
 # disturbanceF = lambda t, x, xDot: -0.3 * xDot
 # disturbanceF = lambda t, x, xDot: 0.0
-disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
+# disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
+disturbanceF = lambda t, x, xDot: 0.0
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
