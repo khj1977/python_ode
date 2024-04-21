@@ -293,7 +293,8 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -0.3 * xDot
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
-disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: 0.0
+disturbanceF = lambda t, x, xDot: -2.0 * xDot
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
@@ -323,7 +324,8 @@ odeBatch.solve()
 
 # plot
 # odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
-odeBatch.saveToFile(4.0, 6.0, -2.0, 2.0)
+# odeBatch.saveToFile(-5.0, 5.0, -5.0, 5.0)
+odeBatch.saveToFile(-0.5, 0.5, -0.5, 0.5)
 # odeBatch.saveToFile(-3.0, 3.0, -3.0, 3.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
