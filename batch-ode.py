@@ -294,7 +294,7 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
 # disturbanceF = lambda t, x, xDot: 0.0
-disturbanceF = lambda t, x, xDot: -2.0 * xDot
+disturbanceF = lambda t, x, xDot: -1.5 * xDot
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
