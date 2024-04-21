@@ -241,7 +241,7 @@ class ODEBatch(batch.Batch):
 # Since it is the most simple case, it does not deploy correlation between
 # theta_i and theta_i+1, etc. It is based on night napkin based work,
 # there could be mistake. It would be investigated seriously later one.
-f = lambda t, x, xDot: -1.2 * math.cos(x)
+f = lambda t, x, xDot: -1.2 * math.cos(x) - 0.1 * x * xDot
 # f = lambda t, x, xDot: -0.3 * xDot
 
 # f = lambda t, x, xDot: -6.0 * x - 5.0 * xDot
@@ -293,8 +293,8 @@ controlInput.setCoef(coefs)
 # disturbanceF = lambda t, x, xDot: -0.3 * xDot
 # disturbanceF = lambda t, x, xDot: 0.0
 # disturbanceF = lambda t, x, xDot: -0.0001 * x*x*x
-# disturbanceF = lambda t, x, xDot: 0.0
-disturbanceF = lambda t, x, xDot: -1.5 * xDot
+disturbanceF = lambda t, x, xDot: 0.0
+# disturbanceF = lambda t, x, xDot: -1.5 * xDot 
 
 # disturbanceF = lambda t, x, xDot: 2.0 * math.sin(1.0 * t)
 # disturbanceF = lambda t, x, xDot: 0.5 * math.sin(1.0 * t)
@@ -325,7 +325,7 @@ odeBatch.solve()
 # plot
 # odeBatch.saveToFile(-200.0, 200.0, -200.0, 200.0)
 # odeBatch.saveToFile(-5.0, 5.0, -5.0, 5.0)
-odeBatch.saveToFile(-0.5, 0.5, -0.5, 0.5)
+odeBatch.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-3.0, 3.0, -3.0, 3.0)
 # ode.saveToFile(-0.05, 0.05, -0.05, 0.05)
 # odeBatch.saveToFile(-10.0, 10.0, -10.0, 10.0)
