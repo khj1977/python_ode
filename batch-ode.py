@@ -15,7 +15,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-import scipy.fft as f
+from scipy.fft import fft, ifft
 
 class ODEBatch(batch.Batch):
   # def __init__
