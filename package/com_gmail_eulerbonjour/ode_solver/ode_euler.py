@@ -1,4 +1,4 @@
-import ode_env
+from com_gmail_eulerbonjour.ode_solver import ode_env
 
 class ODEOneDimEulerMethod:
   def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, controlInputNominal, disturbance):

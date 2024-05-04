@@ -1,13 +1,13 @@
 from pickle import FALSE, TRUE
 from posixpath import supports_unicode_filenames
-from error_dynamics import ErrorDynamics
-from ode_control_input import ControlInput
-from ode_disturbance import Disturbance
-from ode_env import ODEEnv
-import ode_euler
-import ode_coefs
-import ode_control_input
-import ode_delta_lambda
+from com_gmail_eulerbonjour.ode_solver.error_dynamics import ErrorDynamics
+from com_gmail_eulerbonjour.ode_solver.ode_control_input import ControlInput
+from com_gmail_eulerbonjour.ode_solver.ode_disturbance import Disturbance
+from com_gmail_eulerbonjour.ode_solver. ode_env import ODEEnv
+from com_gmail_eulerbonjour.ode_solver import ode_euler
+from com_gmail_eulerbonjour.ode_solver import ode_coefs
+from com_gmail_eulerbonjour.ode_solver import ode_control_input
+from com_gmail_eulerbonjour.ode_solver import ode_delta_lambda
 import math
 from numpy import linalg as la
 import numpy as np

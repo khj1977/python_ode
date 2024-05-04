@@ -1,16 +1,16 @@
 from pickle import FALSE
 from tracemalloc import start
-from k_disturbance_observer import KDisturbanceObserver
-from ode_coefs import ODECoefs
-import ode_euler
-import batch
-import ode_env
-import ode_time
-import ode_control_input
-import ode_robust_control_input
-import ode_disturbance
-import observer
-import error_dynamics
+from com_gmail_eulerbonjour.ode_solver.k_disturbance_observer import KDisturbanceObserver
+from com_gmail_eulerbonjour.ode_solver.ode_coefs import ODECoefs
+from com_gmail_eulerbonjour.ode_solver import ode_euler
+from com_gmail_eulerbonjour.ode_solver import batch
+from com_gmail_eulerbonjour.ode_solver import ode_env
+from com_gmail_eulerbonjour.ode_solver import ode_time
+from com_gmail_eulerbonjour.ode_solver import ode_control_input
+from com_gmail_eulerbonjour.ode_solver import ode_robust_control_input
+from com_gmail_eulerbonjour.ode_solver import ode_disturbance
+from com_gmail_eulerbonjour.ode_solver import observer
+from com_gmail_eulerbonjour.ode_solver import error_dynamics
 import sys
 import matplotlib.pyplot as plt
 import numpy as np

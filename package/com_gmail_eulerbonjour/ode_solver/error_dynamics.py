@@ -1,4 +1,4 @@
-import ode_env
+from com_gmail_eulerbonjour.ode_solver import ode_env
 import numpy as np
 from numpy.linalg import inv
 
