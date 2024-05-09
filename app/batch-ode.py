@@ -19,7 +19,7 @@ from scipy.fft import fft, ifft
 
 class ODEBatch(batch.Batch):
   # def __init__
-  def __init__(self, deltaT, staetT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
+  def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, observerEnvX, envT, delta, rateLambda, controlInput, disturbance, initLambdas, nominalCoefs, kappa):
     # ODEOneDimEulerMethod:
     # def __init__(self, deltaT, startT, endT, startX, startXDot):
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT):
@@ -38,7 +38,7 @@ class ODEBatch(batch.Batch):
     # end of debug
 
     # def __init__(self, deltaT, startT, endT, startX, startXDot, f, env, envT, controlInput, controlInputNominal, disturbance):
-    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, staetT, endT, startX, startXDot, f, env, envT, controlInputReal, controlInputNominalReal, disturbance)
+    self.odeEngine = ode_euler.ODEOneDimEulerMethod(deltaT, startT, endT, startX, startXDot, f, env, envT, controlInputReal, controlInputNominalReal, disturbance)
     self.disturbance = disturbance
     # end of debug
 
