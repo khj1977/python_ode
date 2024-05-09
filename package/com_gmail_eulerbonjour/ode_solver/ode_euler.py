@@ -44,6 +44,11 @@ class ODEOneDimEulerMethod:
   def getControlInput(self):
     return self.controlInput
 
+  def setControlInput(self, input):
+    self.controlInput = input
+
+    return self
+
   def getStates(self):
     return self.env
   
