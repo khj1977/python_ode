@@ -46,6 +46,9 @@ class ODEOneDimEulerMethod:
 
   def getStates(self):
     return self.env
+  
+  def getEnv(self):
+    return self.env
 
   def inc(self):
     # debug
